@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الأمن السيبراني | الموسوعة الشاملة — Dark Nexus</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --gold:#ffd700;--gold2:#ffb300;--gold-glow:rgba(255,215,0,0.18);
+  --cyan:#00e5ff;--green:#00ff9d;--red:#ff4060;
+  --bg:#030a0f;--bg2:#061520;--bg3:rgba(8,25,38,0.92);
+  --border:rgba(255,215,0,0.2);--border2:rgba(0,229,255,0.15);
+  --text:#ddeeff;--muted:#6a9ab8;
+  --r:18px;--r2:28px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.85;}
+
+/* ═══════════════════════════════ INTRO ═══════════════════════════════ */
+#intro{
+  position:fixed;inset:0;z-index:99999;background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.i-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#001a2e 0%,#000 70%);}
+.i-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,229,255,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(0,229,255,.05) 1px,transparent 1px);
+  background-size:48px 48px;animation:gPulse 3s ease-in-out infinite;
+}
+@keyframes gPulse{0%,100%{opacity:.4}50%{opacity:1}}
+.i-scan{
+  position:absolute;width:100%;height:3px;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--gold),var(--cyan),transparent);
+  box-shadow:0 0 24px var(--cyan),0 0 48px var(--gold);
+  animation:scan 2.8s linear infinite;opacity:.9;
+}
+@keyframes scan{0%{top:-3px}100%{top:100%}}
+.i-ptc{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.i-ptc span{
+  position:absolute;border-radius:50%;
+  animation:fUp linear infinite;
+}
+@keyframes fUp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-20px) scale(1);opacity:0}}
+.i-rain{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.18;}
+.i-rain span{
+  position:absolute;top:-20px;font-family:'Share Tech Mono',monospace;
+  font-size:13px;color:var(--green);
+  animation:rain linear infinite;white-space:nowrap;letter-spacing:2px;
+}
+@keyframes rain{from{transform:translateY(-20px)}to{transform:translateY(110vh)}}
+.i-body{position:relative;z-index:10;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.6rem;}
+.i-rings{position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;animation:popIn .8s cubic-bezier(.34,1.56,.64,1) .4s both;}
+@keyframes popIn{from{transform:scale(0) rotate(-180deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.i-ring{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;}
+.r1{border-top-color:var(--gold);border-right-color:var(--gold);animation:spin 2s linear infinite;}
+.r2{inset:14px;border-bottom-color:var(--cyan);border-left-color:var(--cyan);animation:spin 1.5s linear infinite reverse;}
+.r3{inset:28px;border-top-color:var(--green);border-right-color:var(--green);animation:spin 3s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.i-ico{position:relative;font-size:4.2rem;color:var(--gold);filter:drop-shadow(0 0 20px var(--gold));}
+.i-title{font-size:clamp(2rem,5vw,3.4rem);font-weight:900;background:linear-gradient(135deg,#fff,var(--gold),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;animation:fadeUp 1s ease .9s both;}
+.i-sub{font-family:'Rajdhani',sans-serif;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase;font-size:1.05rem;animation:fadeUp 1s ease 1.3s both;}
+.i-tag{color:rgba(255,255,255,.5);font-size:.95rem;animation:fadeUp 1s ease 1.7s both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+.i-bar{width:280px;height:5px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;animation:fadeUp .5s ease 2.2s both;}
+.i-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--cyan));border-radius:10px;animation:fill 3s ease 2.5s forwards;box-shadow:0 0 12px var(--gold);}
+@keyframes fill{to{width:100%}}
+.i-status{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:.82rem;letter-spacing:.1em;animation:fadeUp .5s ease 2.2s both;min-height:1.2em;}
+.i-code{position:absolute;bottom:24px;left:28px;font-family:'Share Tech Mono',monospace;font-size:.68rem;color:var(--green);opacity:.25;line-height:1.7;text-align:left;}
+#intro.out{animation:introOut .8s ease forwards;}
+@keyframes introOut{to{opacity:0;transform:scale(1.04);pointer-events:none;display:none;}}
+
+/* ═══════════════════════════════ CANVAS BG ═══════════════════════════════ */
+#cvs{position:fixed;inset:0;z-index:-2;pointer-events:none;}
+.ambient{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 30% 60%,rgba(0,80,140,.13),transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(0,60,50,.15),transparent 60%);}
+.grid-bg{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(0,229,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.022) 1px,transparent 1px);background-size:54px 54px;}
+
+/* ═══════════════════════════════ SOUND BTN ═══════════════════════════════ */
+#sndBtn{
+  position:fixed;bottom:28px;right:28px;z-index:8000;
+  width:50px;height:50px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--gold);font-size:1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(16px);transition:.3s;
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+}
+#sndBtn:hover{background:var(--gold);color:#000;}
+#sndBtn.muted{border-color:rgba(255,64,96,.4);color:var(--red);}
+
+/* ═══════════════════════════════ MENU TOGGLE ═══════════════════════════════ */
+.menu-btn{
+  position:fixed;top:18px;right:18px;z-index:1500;
+  background:rgba(3,10,15,.9);border:1px solid var(--border);
+  padding:11px 20px;border-radius:50px;color:var(--gold);
+  font-weight:700;font-size:.9rem;cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+  backdrop-filter:blur(16px);transition:.3s;
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+}
+.menu-btn:hover{background:var(--gold);color:#000;border-color:var(--gold);}
+.ham{width:20px;height:14px;display:flex;flex-direction:column;justify-content:space-between;}
+.ham span{height:2px;background:currentColor;border-radius:2px;transition:.3s;}
+
+/* ═══════════════════════════════ SIDEBAR ═══════════════════════════════ */
+.sb-ov{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1999;opacity:0;pointer-events:none;transition:.3s;}
+.sb-ov.on{opacity:1;pointer-events:all;}
+.sidebar{
+  position:fixed;top:0;right:-360px;width:320px;height:100%;
+  background:rgba(2,8,14,.97);backdrop-filter:blur(20px);
+  border-left:1px solid var(--border);z-index:2000;
+  transition:right .35s cubic-bezier(.16,1,.3,1);
+  overflow-y:auto;box-shadow:-14px 0 60px rgba(0,0,0,.8);
+}
+.sidebar.open{right:0;}
+.sb-head{
+  position:sticky;top:0;z-index:5;background:rgba(2,8,14,.98);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.4rem 1.4rem 1rem;border-bottom:1px solid var(--border);
+}
+.sb-logo{display:flex;align-items:center;gap:10px;}
+.sb-logo-ico{width:38px;height:38px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gold);}
+.sb-logo-txt h3{font-size:.95rem;font-weight:800;color:var(--gold);line-height:1.2;}
+.sb-logo-txt span{font-size:.65rem;color:var(--muted);font-family:'Rajdhani',sans-serif;letter-spacing:.1em;text-transform:uppercase;}
+.sb-close{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:.9rem;cursor:pointer;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.sb-close:hover{background:rgba(255,64,96,.15);color:var(--red);}
+.sb-sec{padding:1.2rem 1.4rem .4rem;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);font-family:'Rajdhani',sans-serif;}
+.sb-nav{display:flex;flex-direction:column;gap:2px;padding:0 .7rem 2rem;}
+.sb-nav a{
+  color:var(--text);text-decoration:none;padding:.62rem .9rem;border-radius:12px;
+  font-weight:600;font-size:.88rem;background:transparent;
+  display:flex;align-items:center;gap:12px;transition:.2s;border:1px solid transparent;
+}
+.sb-nav a .ni{width:30px;height:30px;border-radius:8px;background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.14);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:.78rem;flex-shrink:0;transition:.2s;}
+.sb-nav a:hover{background:var(--gold-glow);border-color:var(--border);color:var(--gold);transform:translateX(-4px);}
+.sb-nav a:hover .ni{background:var(--gold);color:#000;}
+.sb-nav a.active-nav{background:var(--gold-glow);border-color:var(--border);color:var(--gold);}
+
+/* ═══════════════════════════════ HOME ═══════════════════════════════ */
+.home{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:5.5rem 1.5rem 3rem;position:relative;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.22);
+  padding:.55rem 1.4rem;border-radius:50px;margin-bottom:2rem;
+  font-size:.92rem;color:var(--cyan);font-weight:600;
+}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.site-title{
+  font-size:clamp(1.9rem,4.5vw,3.4rem);font-weight:900;line-height:1.18;
+  background:linear-gradient(135deg,#fff 25%,var(--gold) 60%,var(--cyan) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:1.1rem;letter-spacing:-.5px;
+}
+.site-desc{font-size:1.05rem;color:var(--muted);max-width:580px;margin:0 auto 2.5rem;}
+.cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+.btn-gold{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;
+  padding:.9rem 2rem;border-radius:50px;font-weight:800;font-size:.95rem;
+  border:none;cursor:pointer;transition:.3s;text-decoration:none;
+  box-shadow:0 4px 24px rgba(255,215,0,.25);
+}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(255,215,0,.4);}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:9px;
+  background:transparent;color:var(--text);
+  padding:.9rem 2rem;border-radius:50px;font-weight:700;font-size:.95rem;
+  border:1px solid var(--border);cursor:pointer;transition:.3s;text-decoration:none;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
+
+/* HERO VISUAL */
+.hero-vis{position:relative;width:100%;max-width:720px;margin:0 auto 3rem;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(0,229,255,.04);}
+.hero-vis img{width:100%;height:360px;object-fit:cover;display:block;filter:brightness(.85) saturate(1.1);}
+.hero-vis .ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(3,10,15,.1),rgba(3,10,15,.75));}
+.hero-vis .live-badge{position:absolute;top:18px;left:18px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);border-radius:8px;padding:6px 12px;font-size:.72rem;color:var(--cyan);font-family:'Share Tech Mono',monospace;letter-spacing:.1em;display:flex;align-items:center;gap:7px;}
+.hero-vis .live-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.5s ease-in-out infinite;}
+.hero-vis .corner{position:absolute;bottom:18px;right:18px;font-family:'Share Tech Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.4);}
+
+/* STATS */
+.stats{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:0;
+  max-width:840px;width:100%;margin-bottom:4rem;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:var(--r2);backdrop-filter:blur(16px);overflow:hidden;
+}
+.stat{text-align:center;padding:2rem 2.5rem;flex:1;min-width:160px;position:relative;}
+.stat+.stat::before{content:'';position:absolute;top:25%;right:0;width:1px;height:50%;background:var(--border);}
+.sv{font-size:2rem;font-weight:900;color:var(--gold);font-family:'Rajdhani',sans-serif;line-height:1;display:block;}
+.sl{font-size:.78rem;color:var(--muted);margin-top:.3rem;}
+
+/* FEATURE CARDS */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.2rem;max-width:880px;width:100%;}
+.feat{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);
+  padding:1.8rem 1.4rem;text-align:center;backdrop-filter:blur(12px);
+  transition:.35s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;
+}
+.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:.3s;}
+.feat:hover{transform:translateY(-8px);border-color:rgba(255,215,0,.4);box-shadow:0 22px 52px rgba(0,0,0,.5);}
+.feat:hover::before{opacity:1;}
+.feat-ico{width:52px;height:52px;border-radius:14px;background:var(--gold-glow);border:1px solid rgba(255,215,0,.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--gold);margin:0 auto 1rem;}
+.feat h3{font-size:.98rem;font-weight:800;color:#fff;margin-bottom:.35rem;}
+.feat p{font-size:.83rem;color:var(--muted);}
+
+/* ═══════════════════════════════ PAGES ═══════════════════════════════ */
+.page{display:none;min-height:100vh;padding:5.5rem 1.5rem 3rem;max-width:1080px;margin:0 auto;}
+.page.active{display:block;animation:pageIn .4s ease-out;}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+.pg-breadcrumb{display:inline-flex;align-items:center;gap:7px;font-size:.76rem;color:var(--muted);margin-bottom:1rem;font-family:'Rajdhani',sans-serif;letter-spacing:.05em;}
+.pg-title{font-size:clamp(1.4rem,3vw,2.2rem);font-weight:900;color:#fff;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.pg-title-ico{width:52px;height:52px;border-radius:14px;background:var(--gold-glow);border:1px solid rgba(255,215,0,.3);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.pg-title-txt span{display:block;font-size:.7rem;color:var(--muted);font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:.12em;text-transform:uppercase;}
+
+/* ═══════════════════════════════ ACCORDION ═══════════════════════════════ */
+.acc{background:var(--bg3);margin-bottom:1.1rem;border-radius:var(--r);border:1px solid var(--border);overflow:hidden;backdrop-filter:blur(8px);transition:border-color .3s;}
+.acc:hover{border-color:rgba(255,215,0,.32);}
+.acc-hd{
+  padding:1.1rem 1.6rem;font-size:1.05rem;font-weight:700;color:#fff;
+  cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  transition:.2s;user-select:none;
+}
+.acc-hd:hover{background:rgba(255,215,0,.03);color:var(--gold);}
+.acc-hd.open{color:var(--gold);background:rgba(255,215,0,.05);border-bottom:1px solid rgba(255,215,0,.1);}
+.acc-left{display:flex;align-items:center;gap:12px;}
+.acc-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.acc-arr{width:30px;height:30px;border-radius:9px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.3s;}
+.acc-arr i{font-size:.74rem;color:var(--gold);transition:transform .3s;}
+.acc-hd.open .acc-arr{background:var(--gold);}
+.acc-hd.open .acc-arr i{transform:rotate(180deg);color:#000;}
+.acc-bd{max-height:0;overflow:hidden;transition:max-height .5s ease-out;}
+.acc-bd.open{max-height:8000px;}
+.acc-inner{padding:1.6rem 2rem;border-top:1px solid rgba(255,215,0,.06);}
+
+/* Content layout with image */
+.c-layout{display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap;}
+.c-text{flex:2.5;min-width:240px;}
+.c-text p{margin-bottom:1.1rem;font-size:1rem;color:var(--text);line-height:1.95;}
+.c-text ul{padding-right:1.5rem;margin-bottom:1.1rem;}
+.c-text ul li{margin-bottom:.85rem;font-size:.98rem;color:#c8dae6;line-height:1.85;}
+.c-text ul li::marker{color:var(--gold);}
+.c-text strong{color:#ffe566;font-weight:700;}
+.c-img{flex:1;min-width:200px;max-width:260px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,.5);flex-shrink:0;}
+.c-img img{width:100%;height:200px;object-fit:cover;display:block;transition:.4s;filter:brightness(.88) saturate(1.1);}
+.c-img img:hover{transform:scale(1.04);filter:brightness(.95) saturate(1.2);}
+
+/* BACK BTN */
+.back-btn{
+  position:fixed;bottom:26px;left:26px;
+  background:var(--bg3);border:1px solid var(--border);
+  padding:10px 18px;border-radius:50px;font-weight:700;font-size:.85rem;
+  cursor:pointer;z-index:1200;color:var(--gold);
+  display:flex;align-items:center;gap:8px;backdrop-filter:blur(16px);transition:.3s;
+}
+.back-btn:hover{background:var(--gold);color:#000;border-color:var(--gold);}
+
+/* VIDEOS */
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem;margin-top:2rem;}
+.vid-card{background:var(--bg3);border-radius:var(--r);overflow:hidden;border:1px solid var(--border);transition:.3s;}
+.vid-card:hover{transform:translateY(-6px);border-color:rgba(255,215,0,.4);box-shadow:0 18px 44px rgba(0,0,0,.55);}
+.vid-thumb-w{position:relative;overflow:hidden;}
+.vid-thumb{width:100%;height:165px;object-fit:cover;display:block;transition:.4s;}
+.vid-card:hover .vid-thumb{transform:scale(1.05);}
+.vid-play-ov{position:absolute;inset:0;background:rgba(0,0,0,.42);display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s;}
+.vid-card:hover .vid-play-ov{opacity:1;}
+.vid-play{width:48px;height:48px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#000;font-size:1.1rem;}
+.vid-info{padding:1.1rem;}
+.vid-info h3{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:.75rem;line-height:1.45;}
+.vid-link{display:inline-flex;align-items:center;gap:7px;background:var(--gold-glow);border:1px solid var(--border);color:var(--gold);padding:7px 15px;border-radius:50px;text-decoration:none;font-weight:700;font-size:.82rem;transition:.2s;}
+.vid-link:hover{background:var(--gold);color:#000;}
+
+/* FOOTER */
+footer{text-align:center;padding:2.5rem 1rem;margin-top:4rem;color:var(--muted);border-top:1px solid var(--border);font-size:.85rem;}
+footer .fl{font-size:1.6rem;color:var(--gold);margin-bottom:.5rem;}
+
+/* RESPONSIVE */
+@media(max-width:680px){
+  .menu-btn span{display:none;}
+  .sidebar{width:290px;}
+  .stats .stat+.stat::before{display:none;}
+  .c-layout{flex-direction:column;}
+  .c-img{max-width:100%;}
+  .vid-grid{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ INTRO ═══════════ -->
+<div id="intro">
+  <div class="i-bg"></div>
+  <div class="i-grid"></div>
+  <div class="i-scan"></div>
+  <div class="i-ptc" id="ptc"></div>
+  <div class="i-rain" id="rain"></div>
+  <div class="i-body">
+    <div class="i-rings">
+      <div class="i-ring r1"></div>
+      <div class="i-ring r2"></div>
+      <div class="i-ring r3"></div>
+      <div class="i-ico"><i class="fas fa-shield-halved"></i></div>
+    </div>
+    <div class="i-title">الأمن السيبراني</div>
+    <div class="i-sub">CYBERSECURITY ENCYCLOPEDIA • 2026</div>
+    <div class="i-tag">درعُك في العالم الرقمي — موسوعة شاملة للطلاب والمحترفين</div>
+    <div class="i-bar"><div class="i-fill"></div></div>
+    <div class="i-status" id="iStat">INITIALIZING SECURITY PROTOCOLS...</div>
+  </div>
+  <div class="i-code" id="iCode"></div>
+</div>
+
+<!-- ═══════════ BG ═══════════ -->
+<canvas id="cvs"></canvas>
+<div class="ambient"></div>
+<div class="grid-bg"></div>
+
+<!-- ═══════════ SOUND ═══════════ -->
+<button id="sndBtn" title="تشغيل/إيقاف الصوت"><i class="fas fa-volume-up"></i></button>
+
+<!-- ═══════════ MENU ═══════════ -->
+<button class="menu-btn" id="menuBtn">
+  <div class="ham"><span></span><span></span><span></span></div>
+  <span>القائمة الرئيسية</span>
+</button>
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<div class="sb-ov" id="sbOv"></div>
+<div class="sidebar" id="sb">
+  <div class="sb-head">
+    <div class="sb-logo">
+      <div class="sb-logo-ico"><i class="fas fa-shield-halved"></i></div>
+      <div class="sb-logo-txt">
+        <h3>الموسوعة الشاملة</h3>
+        <span>DARK NEXUS • 2026</span>
+      </div>
+    </div>
+    <button class="sb-close" id="sbClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="sb-sec">التنقل الرئيسي</div>
+  <div class="sb-nav">
+    <a href="#" data-p="home"><div class="ni"><i class="fas fa-home"></i></div>الرئيسية</a>
+    <a href="#" data-p="p1"><div class="ni"><i class="fas fa-shield-halved"></i></div>تعريف الأمن السيبراني</a>
+    <a href="#" data-p="p2"><div class="ni"><i class="fas fa-history"></i></div>تاريخ الأمن السيبراني</a>
+    <a href="#" data-p="p3"><div class="ni"><i class="fas fa-star-of-life"></i></div>أهميته وخطورته</a>
+    <a href="#" data-p="p4"><div class="ni"><i class="fas fa-bug"></i></div>أنواع الهجمات والثغرات</a>
+    <a href="#" data-p="p5"><div class="ni"><i class="fas fa-child"></i></div>حماية الطفل</a>
+    <a href="#" data-p="p6"><div class="ni"><i class="fas fa-user-shield"></i></div>حماية النفس والأسرة</a>
+    <a href="#" data-p="p7"><div class="ni"><i class="fas fa-building"></i></div>حماية الشركة</a>
+    <a href="#" data-p="p8"><div class="ni"><i class="fas fa-book-open"></i></div>قصص واقعية</a>
+    <a href="#" data-p="p9"><div class="ni"><i class="fas fa-gavel"></i></div>قوانين تحميك</a>
+    <a href="#" data-p="p10"><div class="ni"><i class="fas fa-graduation-cap"></i></div>كيف تتعلم الأمن السيبراني</a>
+    <a href="#" data-p="pvid"><div class="ni"><i class="fab fa-youtube"></i></div>مكتبة الفيديوهات</a>
+  </div>
+</div>
+
+<!-- ═══════════ HOME ═══════════ -->
+<div id="home" class="home">
+  <div class="badge"><div class="dot"></div>خَلِّك واعِي — عشان مَحدِش يِسْرِق أَحْلامَك الرَّقَمِية</div>
+  <h1 class="site-title">🛡️ الأمن السيبراني<br>دِرعُكَ فِي العَالَمِ الرَّقَمِيّ</h1>
+  <p class="site-desc">موسوعة شاملة باللغة العربية — تعلّم وأحمِ نفسك وأسرتك وابقَ متقدماً على التهديدات الرقمية في عالم يتسارع فيه التطور كل يوم</p>
+  <div class="cta-row">
+    <button class="btn-gold" onclick="gotoPage('p1')"><i class="fas fa-book-open"></i> ابدأ التعلم الآن</button>
+    <button class="btn-ghost" onclick="gotoPage('pvid')"><i class="fab fa-youtube"></i> مكتبة الفيديوهات</button>
+  </div>
+  <div class="hero-vis">
+    <img src="https://images.pexels.com/photos/5380592/pexels-photo-5380592.jpeg" alt="Cybersecurity dashboard" onerror="this.src='https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg'">
+    <div class="ov"></div>
+    <div class="live-badge">SYSTEM ACTIVE — MONITORING THREATS</div>
+    <div class="corner">DARK NEXUS CYBER CORE v2.6</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><span class="sv">10.5T$</span><div class="sl">خسائر الجرائم الإلكترونية 2025</div></div>
+    <div class="stat"><span class="sv">3.5M</span><div class="sl">وظيفة شاغرة في الأمن السيبراني</div></div>
+    <div class="stat"><span class="sv">95%</span><div class="sl">اختراقات بسبب خطأ بشري</div></div>
+    <div class="stat"><span class="sv">250B$</span><div class="sl">حجم سوق الأمن السيبراني</div></div>
+  </div>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-ico"><i class="fas fa-shield-virus"></i></div><h3>حماية شاملة</h3><p>نحمي بياناتك من الاختراق والسرقة الرقمية</p></div>
+    <div class="feat"><div class="feat-ico"><i class="fas fa-brain"></i></div><h3>توعية مستمرة</h3><p>أحدث المعلومات والتقنيات الأمنية</p></div>
+    <div class="feat"><div class="feat-ico"><i class="fas fa-globe"></i></div><h3>محتوى عربي</h3><p>موسوعة شاملة باللغة العربية الفصيحة</p></div>
+    <div class="feat"><div class="feat-ico"><i class="fas fa-graduation-cap"></i></div><h3>مسار تعليمي</h3><p>من المبتدئ إلى المحترف خطوة بخطوة</p></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني — Dark Nexus Cyber Core</footer>
+</div>
+
+<!-- ═══════════ PAGE 1: تعريف ═══════════ -->
+<div id="p1" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> التعريف</div>
+  <div class="pg-title">
+    <div class="pg-title-ico"><i class="fas fa-shield-halved"></i></div>
+    <div class="pg-title-txt"><span>DEFINITION</span>التَّعْرِيفُ الشَّامِلُ لِلأَمْنِ السِّيبِرَانِيّ</div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>المفهوم الأساسي وثالوث الأمن CIA بالتفصيل الكامل</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p><strong>الأمن السيبراني (Cybersecurity)</strong> هو منظومة متكاملة من التقنيات والعمليات والممارسات والضوابط التي تُصمَّم بهدف حماية الشبكات والأجهزة والبرمجيات والبيانات والأنظمة الرقمية من الهجمات أو التلف أو الوصول غير المصرح به أو الاستغلال أو التعطيل. وهو ليس مجرد برنامج أو جهاز، بل ثقافة كاملة وأسلوب حياة رقمي.</p>
+        <p>يقوم الأمن السيبراني على ثلاثة مبادئ أساسية تُعرف بـ <strong>ثالوث CIA</strong>:</p>
+        <ul>
+          <li><strong>السِّرِّيَّة (Confidentiality):</strong> ضمان أن المعلومات لا يمكن الوصول إليها إلا من الأشخاص المصرح لهم فقط. يتحقق ذلك عبر التشفير (Encryption)، والتحكم في الوصول (Access Control)، والمصادقة متعددة العوامل (MFA). فمثلاً بياناتك الطبية السرية يجب ألا يراها أحد سوى طبيبك.</li>
+          <li><strong>السَّلَامَة (Integrity):</strong> ضمان أن المعلومات دقيقة وكاملة ولم يتم التلاعب بها أو تعديلها بشكل غير مصرح به. يتحقق ذلك عبر التواقيع الرقمية (Digital Signatures)، دوال التجزئة (Hashing)، والتحكم في الإصدارات. إذا تم تعديل ملف سري ولو حرفاً واحداً فيجب اكتشاف ذلك فوراً.</li>
+          <li><strong>التَّوَافُر (Availability):</strong> ضمان أن الأنظمة والمعلومات متاحة عند الحاجة إليها. يتحقق ذلك بالنسخ الاحتياطي وخطط التعافي من الكوارث وأنظمة التوازن في التحميل (Load Balancing). موقع بنكك يجب أن يكون متاحاً 24/7.</li>
+        </ul>
+        <p>في السنوات الأخيرة أُضيف إلى هذا الثالوث مبدأ رابع وهو <strong>عدم الإنكار (Non-Repudiation)</strong>، أي عدم إمكانية إنكار قيام شخص بعملية معينة عبر الإنترنت كالتوقيع على عقد رقمي.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg" alt="CIA Triad cybersecurity" onerror="this.src='https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>ماذا تشمل حماية الأنظمة الرقمية؟ — التفصيل الكامل</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>الأمن السيبراني مجال واسع يغطي طبقات متعددة من الحماية، كل طبقة تتخصص في جانب محدد:</p>
+        <ul>
+          <li><strong>حماية البنية التحتية الحيوية (Critical Infrastructure):</strong> تأمين الأنظمة الداعمة للخدمات الأساسية كمحطات توليد الكهرباء، شبكات توزيع المياه، المستشفيات، والبنوك. اختراق هذه الأنظمة قد يتسبب في كارثة إنسانية حقيقية تطال ملايين البشر.</li>
+          <li><strong>أمن الشبكات (Network Security):</strong> حماية البنية التحتية للشبكة من الوصول غير المصرح به باستخدام جدران الحماية، أنظمة كشف التسلل (IDS/IPS)، والتشفير. الشبكة بوابة الدخول الأولى لأي مهاجم.</li>
+          <li><strong>أمن التطبيقات (Application Security):</strong> ضمان خلو التطبيقات من الثغرات قبل الإطلاق وبعده. 80% من التطبيقات تحتوي ثغرة أمنية واحدة على الأقل وفق دراسات OWASP.</li>
+          <li><strong>أمن البيانات (Data Security):</strong> حماية البيانات في وضعي التخزين (at rest) والنقل (in transit)، وضمان حذفها بشكل آمن عند الانتهاء منها.</li>
+          <li><strong>إدارة الهوية والوصول (IAM):</strong> التحكم الدقيق في من يمكنه الوصول لأي مورد، عبر كلمات المرور، المصادقة متعددة العوامل (MFA)، والتحكم المستند إلى الأدوار (RBAC).</li>
+          <li><strong>الاستجابة للحوادث والتعافي (IR/BCP):</strong> خطط مكتوبة ومختبرة للتعامل مع الاختراقات، احتواء الضرر، والعودة للعمل في أسرع وقت.</li>
+          <li><strong>التوعية الأمنية (Security Awareness):</strong> تدريب البشر لأنهم الحلقة الأضعف دائماً — 95% من الاختراقات تبدأ بخطأ بشري.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5380592/pexels-photo-5380592.jpeg" alt="Network security systems" onerror="this.src='https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>مفاهيم متقدمة: التشفير، الهندسة الاجتماعية، إدارة المخاطر، الفضاء السيبراني</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p><strong>الفَضَاءُ السِّيبِرَانِيّ (Cyberspace):</strong> البيئة الافتراضية المكونة من شبكات الاتصالات المترابطة، الأنظمة الحاسوبية، والبيانات. يمتد من الهاتف في جيبك حتى الأقمار الصناعية في الفضاء، وهو الميدان الخامس للحرب بعد البر والبحر والجو والفضاء.</p>
+        <p><strong>التَّشْفِيرُ (Cryptography):</strong> علم تحويل البيانات من نص واضح إلى نص مشفر لا يمكن قراءته بدون المفتاح. ينقسم إلى: <strong>تشفير متماثل (Symmetric)</strong> كـ AES-256 حيث يُستخدم نفس المفتاح للتشفير وفك التشفير وهو الأسرع؛ و<strong>تشفير غير متماثل (Asymmetric)</strong> كـ RSA-4096 حيث يوجد مفتاح عام للتشفير ومفتاح خاص لفك التشفير وهو أكثر أماناً لتبادل المفاتيح.</p>
+        <p><strong>الهَنْدَسَةُ الاِجْتِمَاعِيَّةُ (Social Engineering):</strong> فن التلاعب النفسي بالعنصر البشري — أضعف حلقة في أي منظومة أمنية — لدفع الضحايا إلى كشف معلومات سرية أو تنفيذ أفعال ضارة. تشمل: التصيد (Phishing)، التصيد الهاتفي (Vishing)، الإغراء (Baiting)، والانتحال (Pretexting). قد تنفق مؤسسة ملايين على جدران الحماية لكن موظفاً واحداً يُفتح رسالة مزيفة يهدم كل شيء.</p>
+        <p><strong>إِدَارَةُ المَخَاطِرِ:</strong> عملية مستمرة لتحديد (Identify)، تقييم (Assess)، ومعالجة (Treat) المخاطر السيبرانية. خيارات المعالجة: قبول المخاطر (Accept)، نقلها بالتأمين السيبراني (Transfer)، تجنبها (Avoid)، أو تخفيفها بضوابط تقنية (Mitigate).</p>
+        <p><strong>نموذج NIST للاستجابة للحوادث:</strong> التحضير ← التحديد ← الاحتواء ← الاستئصال ← الاسترداد ← الدروس المستفادة.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5935791/pexels-photo-5935791.jpeg" alt="Encryption and code" onerror="this.src='https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 2: تاريخ ═══════════ -->
+<div id="p2" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> التاريخ</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-history"></i></div><div class="pg-title-txt"><span>HISTORY</span>تاريخ الأمن السيبراني وتطوره عبر العقود</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>📅 السبعينيات — بذرة الوعي الأولى (1970–1979)</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>بدأت قصة الأمن السيبراني مع ظهور شبكة <strong>ARPANET</strong> التي طورتها وزارة الدفاع الأمريكية عام 1969 كنواة للإنترنت الحديث. في عام 1971، قام الباحث <strong>روبرت توماس</strong> بتطوير برنامج تجريبي يُدعى <strong>"Creeper"</strong> (الزاحف)، وهو أول برنامج ينتشر ذاتياً عبر الشبكة ويعرض رسالة بسيطة: "أنا الزاحف، أمسكني إن استطعت!" لم يكن ضاراً لكنه أثبت إمكانية انتقال البرامج عبر الشبكات.</p>
+        <p>رداً على ذلك، ابتكر <strong>راي توملينسون</strong> —مخترع البريد الإلكتروني— برنامج <strong>"Reaper"</strong> (الحصاد) لمطاردة Creeper وحذفه، وهو بذلك أول برنامج مضاد للبرمجيات الضارة في التاريخ. هذه المعادلة البسيطة (هجوم ← دفاع) كانت بداية سباق التسلح السيبراني الذي لا يزال مستمراً حتى اليوم.</p>
+        <ul>
+          <li>1971 — ظهور Creeper، أول برنامج ذاتي الانتشار</li>
+          <li>1971 — ظهور Reaper، أول برنامج مضاد للفيروسات</li>
+          <li>1973 — أول سرقة إلكترونية بقيمة 2 مليون دولار عبر هاتف</li>
+          <li>1979 — Kevin Mitnick يخترق نظام ARPANET وهو في سن 16</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg" alt="Old computer terminal 1970s" onerror="this.src='https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>📅 الثمانينيات — ظهور التهديدات الحقيقية (1980–1989)</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>مع انتشار الكمبيوتر الشخصي (PC) بفضل IBM وApple، أصبح لدى المهاجمين هدف واسع الانتشار. عام 1983 صنع فريق بقيادة <strong>فريد كوهين</strong> أول فيروس حاسوبي حقيقي كتجربة أكاديمية، وكان ينتشر في 30 دقيقة فقط عبر الأقراص المرنة.</p>
+        <p>عام 1986 ظهر <strong>Brain</strong>، أول فيروس يستهدف IBM PC وانتشر عبر الأقراص المرنة في 90 دولة. في عام 1988 جاء الحدث الذي غيّر كل شيء: <strong>دودة موريس (Morris Worm)</strong> التي ابتكرها طالب الدكتوراه <strong>روبرت تابان موريس</strong> وأصابت 6,000 جهاز — نحو 10% من إجمالي الإنترنت آنذاك — وتسببت في تعطيل الأنظمة لأيام وخسائر تجاوزت 96 مليون دولار.</p>
+        <p>كانت النتيجة المباشرة إنشاء أول <strong>CERT (فريق الاستجابة لطوارئ الحاسوب)</strong> في جامعة كارنيجي ميلون بتمويل من وزارة الدفاع الأمريكية، وصدور أول حكم بالسجن بسبب جريمة إلكترونية على موريس.</p>
+        <ul>
+          <li>1983 — أول فيروس حاسوبي تجريبي بجامعة كاليفورنيا</li>
+          <li>1986 — فيروس Brain يضرب IBM PC في 90 دولة</li>
+          <li>1988 — دودة موريس تشل الإنترنت وتُنشئ CERT</li>
+          <li>1989 — ظهور أولى برامج مكافحة الفيروسات التجارية</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg" alt="Old computer system 1980s" onerror="this.src='https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>📅 التسعينيات — انفجار الإنترنت والفيروسات (1990–1999)</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>مع ظهور الشبكة العنكبوتية (World Wide Web) عام 1991 وانتشار الإنترنت، أصبحت الفيروسات تنتشر عبر البريد الإلكتروني بسرعة غير مسبوقة. وشهدت هذه الحقبة تحولاً من الهجمات الفردية إلى الجريمة المنظمة الممنهجة.</p>
+        <ul>
+          <li><strong>CIH أو Chernobyl (1998):</strong> فيروس مدمر يمسح محتوى BIOS الخاص بالحاسوب جاعلاً إياه غير قابل للتشغيل تماماً. أصاب 60 مليون جهاز في 20 دولة وسُمّي بـ"تشيرنوبيل" لأنه ينفجر يوم ذكرى كارثة تشيرنوبيل.</li>
+          <li><strong>Melissa (1999):</strong> أول فيروس كتلة بريدية ضخم ينتشر بإرسال نفسه لأول 50 شخص في دفتر عناوين الضحية. تسبب في إغراق خوادم البريد وخسائر تجاوزت 80 مليون دولار.</li>
+          <li><strong>Kevin Mitnick (1995):</strong> القبض على أشهر مخترق في التاريخ بعد ملاحقة امتدت سنوات، ليُدجَّن لاحقاً مستشاراً أمنياً.</li>
+          <li><strong>ظهور SSL (1994):</strong> من شركة Netscape لتأمين المعاملات الإلكترونية وهو أساس HTTPS اليوم.</li>
+          <li><strong>قانون CFAA (1996):</strong> توسيع قانون مكافحة الاحتيال الحاسوبي الأمريكي ليشمل أي جهاز متصل بالإنترنت.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/270373/pexels-photo-270373.jpeg" alt="Internet 1990s networking" onerror="this.src='https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>📅 القرن الحادي والعشرون — سباق التسلح الرقمي (2000 حتى الآن)</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>تحوّل الأمن السيبراني من مسألة تقنية إلى قضية <strong>أمن قومي وحرب جيوسياسية</strong>. أصبحت الدول تمتلك وحدات هجوم سيبراني كما تمتلك جيوشاً، وأصبحت الشركات تُقيَّم بمستوى حمايتها السيبرانية كما تُقيَّم بأرباحها.</p>
+        <ul>
+          <li><strong>ILOVEYOU (2000):</strong> انتشر في أيام وأصاب 45 مليون جهاز بخسائر 10 مليارات دولار. بدأ بملف حب مزيف!</li>
+          <li><strong>Stuxnet (2010):</strong> أول سلاح سيبراني استهدف مفاعلات نووية إيرانية. طور بالتعاون الأمريكي-الإسرائيلي وأعاد برامج إيران النووية سنوات.</li>
+          <li><strong>Sony PSN (2011):</strong> سرقة بيانات 77 مليون مستخدم وتوقف الخدمة 23 يوماً وخسائر 171 مليون دولار.</li>
+          <li><strong>Shamoon على أرامكو (2012):</strong> مسح 30,000 جهاز كمبيوتر في أكبر شركة نفط بالعالم.</li>
+          <li><strong>اختراق Yahoo (2016):</strong> سرقة بيانات 3 مليارات حساب في أكبر اختراق للبيانات في التاريخ.</li>
+          <li><strong>WannaCry (2017):</strong> 200,000 جهاز في 150 دولة، أغلق مستشفيات بريطانية كاملة. الدرس: التحديث الفوري.</li>
+          <li><strong>SolarWinds (2020):</strong> اختراق 18,000 مؤسسة حكومية وخاصة عبر تحديث برمجي موقّع — أكثر الهجمات تعقيداً في التاريخ.</li>
+          <li><strong>Colonial Pipeline (2021):</strong> وقف ضخ الوقود لنصف الساحل الشرقي الأمريكي بسبب برنامج فدية واحد.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg" alt="Modern cyber attack monitoring" onerror="this.src='https://images.pexels.com/photos/5935791/pexels-photo-5935791.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 3: أهمية ═══════════ -->
+<div id="p3" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> الأهمية</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-star-of-life"></i></div><div class="pg-title-txt"><span>IMPORTANCE</span>أهمية الأمن السيبراني وخطورة إهماله</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>💰 الأثر الاقتصادي — تريليونات الدولارات على المحك</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>تكلف الجرائم الإلكترونية العالم أكثر من <strong>6 تريليونات دولار سنوياً</strong> وفق تقديرات 2022، ومن المتوقع أن تتجاوز <strong>10.5 تريليون دولار بحلول 2025</strong>، مما يجعلها ثالث أكبر اقتصاد في العالم بعد الولايات المتحدة والصين. هذه الأرقام المذهلة تشمل: سرقة الأموال والبيانات، أضرار الإنتاج، خسائر الإيرادات، سمعة الشركات، والتحقيقات الجنائية.</p>
+        <p>الأثر الاقتصادي لا يقتصر على الشركات الكبيرة؛ في 2022 تعرضت 61% من الشركات الصغيرة والمتوسطة لهجوم سيبراني. <strong>60% منها أغلقت أبوابها خلال 6 أشهر من الهجوم!</strong> لأنها لم تستطع تحمّل تكلفة التعافي.</p>
+        <ul>
+          <li>هجوم NotPetya وحده كلّف Maersk وFedEx أكثر من 10 مليارات دولار</li>
+          <li>اختراق Equifax كلّف الشركة 700 مليون دولار في التسويات القضائية</li>
+          <li>متوسط تكلفة خرق البيانات في 2024: 4.88 مليون دولار للمؤسسة الواحدة</li>
+          <li>سوق الأمن السيبراني العالمي يتجاوز 250 مليار دولار ويرتفع سنوياً</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/534216/pexels-photo-534216.jpeg" alt="Financial damage cyberattack economy" onerror="this.src='https://images.pexels.com/photos/259249/pexels-photo-259249.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🔐 الخصوصية والهوية الرقمية — حقوق لا يمكن استرجاعها</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>بياناتك الرقمية هي نسخة كاملة من حياتك: صورك الخاصة، محادثاتك العاطفية، سجلاتك الطبية، حساباتك البنكية، وعلاقاتك الاجتماعية. سرقة هذه البيانات قد تدمر حياتك بشكل لا يمكن إصلاحه:</p>
+        <ul>
+          <li><strong>سرقة الهوية (Identity Theft):</strong> استخدام معلوماتك الشخصية لفتح قروض أو ارتكاب جرائم باسمك. استرداد هويتك قد يستغرق سنوات وآلاف الدولارات.</li>
+          <li><strong>الابتزاز الإلكتروني (Sextortion):</strong> تسريب أو التهديد بتسريب صور خاصة مقابل المال. يستهدف الضحايا من جميع الأعمار ويدفع كثيرين للانتحار.</li>
+          <li><strong>التشهير والسمعة:</strong> نشر معلومات أو صور محرجة قد تُفقدك وظيفتك وعلاقاتك وتنهي مسيرتك المهنية.</li>
+          <li><strong>التلاعب بالرأي:</strong> استخدام بياناتك لاستهدافك بحملات تضليل مصممة خصيصاً لك بواسطة الذكاء الاصطناعي.</li>
+        </ul>
+        <p>حادثة واحدة يمكن أن تمسح سنوات من بناء السمعة. الأمن السيبراني هو الحارس الأمين لكرامتك وخصوصيتك.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5473955/pexels-photo-5473955.jpeg" alt="Privacy data protection digital identity" onerror="this.src='https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🏥 الأمن السيبراني والأرواح البشرية — ليس مبالغة</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>قد يبدو الأمر مبالغة لكنه حقيقة موثقة: الهجمات السيبرانية <strong>تقتل الناس فعلاً</strong>. في 2020 توفيت مريضة ألمانية إثر تعطل أنظمة مستشفى بسبب هجوم Ransomware وتعذّر تلقّيها العلاج في الوقت المناسب.</p>
+        <ul>
+          <li>WannaCry أغلق 80 مستشفى في بريطانيا وتأثر آلاف المرضى مباشرة</li>
+          <li>اختراق أنظمة السدود أو الكهرباء قد يتسبب في كوارث إنسانية للملايين</li>
+          <li>اختراق السيارات ذاتية القيادة (تجريبياً بالفعل من Jeep عام 2015) يُشكّل تهديداً حقيقياً للأرواح</li>
+          <li>اختراق أجهزة المستشفيات كضخات الأنسولين وأجهزة تنظيم القلب بات ممكناً تقنياً</li>
+        </ul>
+        <p>مع انتشار إنترنت الأشياء (IoT) وتوصيل كل شيء بالإنترنت من السيارات حتى أجهزة القلب، أصبح الأمن السيبراني <strong>مسألة حياة أو موت حرفياً</strong>.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/3938023/pexels-photo-3938023.jpeg" alt="Hospital cybersecurity patient safety" onerror="this.src='https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🌐 دعم التحول الرقمي — الأمن شرط الازدهار لا عائق</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>كثيرون يرون الأمن السيبراني عائقاً أمام التطور. الحقيقة العكس تماماً: بدون أمن سيبراني <strong>لا يمكن للتحول الرقمي أن يُكتمل</strong>. من سيثق بتطبيق دفع إلكتروني إذا كانت بياناته البنكية عرضة للسرقة؟ من سيستخدم الصحة الرقمية إذا كان سجله الطبي مكشوفاً؟</p>
+        <ul>
+          <li>التجارة الإلكترونية تحتاج أمن الدفع وثقة العملاء</li>
+          <li>التعليم عن بُعد يحتاج حماية بيانات الطلاب والمحتوى الفكري</li>
+          <li>الحكومة الإلكترونية تحتاج حماية بيانات المواطنين الحساسة</li>
+          <li>المدن الذكية تحتاج تأمين كل جهاز متصل من إشارات المرور حتى محطات الكهرباء</li>
+          <li>الذكاء الاصطناعي يحتاج حماية نماذجه وبياناته من التلاعب</li>
+        </ul>
+        <p>الأمن السيبراني هو <strong>البنية التحتية للبنية التحتية</strong> — الأساس الخفي الذي تقوم عليه كل التقنيات الحديثة.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg" alt="Digital transformation smart city" onerror="this.src='https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 4: هجمات ═══════════ -->
+<div id="p4" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> الهجمات</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-bug"></i></div><div class="pg-title-txt"><span>THREATS</span>أنواع الهجمات السيبرانية والثغرات بالتفصيل</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🦠 البرمجيات الخبيثة (Malware) — التهديد الأشمل</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p><strong>البرمجيات الخبيثة (Malicious Software)</strong> هي أي برنامج مصمم بقصد إيذاء المستخدم أو جهازه أو شبكته أو بياناته. تصل عبر مرفقات البريد، مواقع مزيفة، أقراص USB ملوثة، أو تطبيقات مقرصنة:</p>
+        <ul>
+          <li><strong>الفيروسات (Viruses):</strong> تتكاثر وتلتصق بملفات أخرى سليمة وتحتاج تدخل المستخدم لتنشيطها (فتح ملف مصاب مثلاً). تستطيع الإفساد أو الحذف أو إخفاء الملفات.</li>
+          <li><strong>الديدان (Worms):</strong> تنتشر عبر الشبكات بشكل ذاتي تلقائي دون أي تدخل بشري، مما يجعلها أسرع وأخطر. دودة موريس أصابت 10% من الإنترنت في ساعات.</li>
+          <li><strong>أحصنة طروادة (Trojans):</strong> تتنكر كبرامج مفيدة (لعبة، أداة تحسين) لكنها تحتوي كوداً ضاراً خفياً يفتح باباً خلفياً للمهاجم.</li>
+          <li><strong>برامج الفدية (Ransomware):</strong> تشفّر جميع ملفاتك وتطلب فدية بالعملة الرقمية لفك التشفير. أشهرها: WannaCry، Ryuk، LockBit، REvil. خسائرها تجاوزت 20 مليار دولار في 2021.</li>
+          <li><strong>برامج التجسس (Spyware):</strong> تراقب كل نشاطك وترسله للمهاجم: ضغطات لوحة المفاتيح (Keylogging)، لقطات الشاشة، كاميرا الجهاز، وكلمات المرور.</li>
+          <li><strong>Rootkits:</strong> تخفي وجودها بعمق داخل نظام التشغيل وتمنح المهاجم تحكماً كاملاً يصعب اكتشافه حتى ببرامج مكافحة الفيروسات.</li>
+          <li><strong>Botnets:</strong> شبكات من آلاف الأجهزة المخترقة تُستخدم لشن هجمات DDoS أو إرسال البريد المزعج أو تعدين العملات الرقمية، وأصحابها لا يعلمون بذلك.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5473956/pexels-photo-5473956.jpeg" alt="Malware ransomware virus attack" onerror="this.src='https://images.pexels.com/photos/5935791/pexels-photo-5935791.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🎣 الهندسة الاجتماعية والتصيد — أخطر الأسلحة السيبرانية</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p><strong>الهندسة الاجتماعية</strong> تستغل ضعف الطبيعة البشرية لا الثغرات التقنية. مهما كانت جدران حمايتك قوية، موظف واحد ينقر على رابط مزيف يهدمها كلها. أكثر من 80% من الاختراقات تبدأ بهجوم هندسة اجتماعية:</p>
+        <ul>
+          <li><strong>التصيد الاحتيالي (Phishing):</strong> رسائل بريد تبدو من جهة موثوقة (بنك، شركة، جهة حكومية) تحتوي روابط مزيفة أو مرفقات ضارة. يستخدم المهاجمون الذكاء الاصطناعي لجعلها مقنعة تماماً.</li>
+          <li><strong>التصيد المخصص (Spear Phishing):</strong> هجوم تصيد مصمم خصيصاً لشخص بعينه باستخدام معلومات شخصية عنه من وسائل التواصل الاجتماعي لزيادة المصداقية.</li>
+          <li><strong>Smishing:</strong> تصيد عبر SMS مثل "طرد لم يُسلَّم، اضغط هنا" أو "حسابك معلق، تحقق الآن".</li>
+          <li><strong>Vishing:</strong> تصيد هاتفي، شخص يتصل مدّعياً أنه من دعم Microsoft أو البنك ويطلب منك تثبيت برنامج أو إعطاءه كلمة المرور.</li>
+          <li><strong>Pretexting (الذريعة):</strong> اختلاق سيناريو كامل، كالتظاهر بأنك مسؤول موارد بشرية أو محقق، لبناء الثقة وانتزاع المعلومات.</li>
+          <li><strong>Baiting (الإغراء):</strong> ترك USB مصاب في مكتب الشركة مكتوب عليه "رواتب سرية Q4" — 45% من الناس يوصلونه بأجهزتهم فوراً!</li>
+          <li><strong>Quid Pro Quo:</strong> الاتصال بكثير من الأشخاص مدّعياً أنك من دعم تقنية المعلومات حتى تجد أحدهم يحتاج المساعدة فتأخذ وصولاً كاملاً.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5380612/pexels-photo-5380612.jpeg" alt="Social engineering phishing attack" onerror="this.src='https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>⚡ هجمات الشبكات — DDoS وMITM وSQL Injection والمزيد</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <ul>
+          <li><strong>DDoS (حجب الخدمة الموزع):</strong> إغراق الخادم بحركة مرور هائلة من آلاف الأجهزة (Botnet) حتى ينهار. هجوم AWS 2020 وصل إلى 2.3 تيرابايت/ثانية. تستخدمه عصابات لابتزاز المواقع التجارية.</li>
+          <li><strong>MITM — الرجل في الوسط:</strong> المهاجم يضع نفسه بين طرفين متواصلَيْن ليعترض ويقرأ ويعدّل الاتصالات. يحدث على شبكات الواي فاي العامة غير المشفرة. لذلك لا تدخل حسابك البنكي في المقهى بدون VPN.</li>
+          <li><strong>SQL Injection:</strong> حقن كود SQL ضار في حقول إدخال المستخدم لخداع قاعدة البيانات. قد يكشف جميع البيانات المخزنة أو يحذفها. مسؤول عن 65% من هجمات تطبيقات الويب.</li>
+          <li><strong>XSS — Cross Site Scripting:</strong> حقن سكريبت ضار في صفحة ويب يُنفَّذ في متصفح المستخدمين الآخرين لسرقة جلساتهم أو كلمات مرورهم.</li>
+          <li><strong>هجمات يوم الصفر (Zero-Day):</strong> استغلال ثغرة في برنامج اكتشفها المهاجم قبل المطوّر — لا يوجد تصحيح متاح بعد. أسعارها في السوق السوداء تصل لملايين الدولارات.</li>
+          <li><strong>APT — التهديدات المستمرة المتقدمة:</strong> هجمات طويلة الأمد ومُخطط لها بعناية، عادةً من جهات دولة، تبقى خفية داخل الشبكة لأشهر أو سنوات تجمع المعلومات.</li>
+          <li><strong>Supply Chain Attacks:</strong> الهجوم على مورد برمجيات موثوق للوصول لعملائه. SolarWinds أكبر مثال حديث.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg" alt="Network DDoS attack hacking" onerror="this.src='https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 5: حماية الطفل ═══════════ -->
+<div id="p5" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> حماية الطفل</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-child"></i></div><div class="pg-title-txt"><span>CHILD SAFETY</span>حماية الطفل في الفضاء الرقمي</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>👨‍👩‍👧 الرقابة الأبوية الذكية — أدوات وتقنيات فعّالة</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>في عصر تقضي فيه الأطفال 7+ ساعات يومياً على الشاشات، أصبحت الرقابة الأبوية الرقمية ضرورة وليست اختياراً. لكن الرقابة ليست تجسساً — إنها حماية بمحبة وحوار مفتوح:</p>
+        <ul>
+          <li><strong>Google Family Link:</strong> التطبيق المجاني من جوجل يتيح لك الاطلاع على تطبيقات الطفل ومواقعه والموافقة على التطبيقات الجديدة وتحديد وقت الاستخدام اليومي وتحديد موقع الطفل الجغرافي.</li>
+          <li><strong>Qustodio:</strong> من أقوى برامج الرقابة الأبوية، يعمل على جميع الأجهزة (iOS/Android/PC) ويوفر تقارير مفصلة لأنشطة الطفل عبر الإنترنت.</li>
+          <li><strong>Net Nanny وCircle:</strong> حلول متقدمة تتحكم في كل حركة مرور الإنترنت على مستوى الشبكة المنزلية بالكامل.</li>
+          <li><strong>SafeSearch:</strong> فعّله في Google وYouTube وBing لمنع ظهور المحتوى غير اللائق في نتائج البحث.</li>
+          <li><strong>وضع YouTube Kids:</strong> استخدم التطبيق المخصص للأطفال بدلاً من YouTube العادي.</li>
+          <li><strong>تحديد وقت الشاشة:</strong> Apple Screen Time وAndroid Digital Wellbeing أدوات مدمجة ممتازة لتحديد حد يومي لكل تطبيق.</li>
+        </ul>
+        <p><strong>الأهم من كل أداة:</strong> الحوار المفتوح. علّم طفلك ألا يشارك اسمه الكامل، عنوانه، اسم مدرسته، أو أي صور مع غرباء عبر الإنترنت مهما بدوا ودودين.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg" alt="Child safe internet parental control" onerror="this.src='https://images.pexels.com/photos/4144179/pexels-photo-4144179.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>😔 التنمر الإلكتروني — التهديد الصامت الذي يسرق طفولة أبنائنا</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p><strong>التنمر الإلكتروني (Cyberbullying)</strong> هو استخدام التكنولوجيا لمضايقة أو تهديد أو إهانة شخص آخر. يختلف عن التنمر التقليدي كونه لا ينتهي عند باب المدرسة — يدخل غرفة نوم الطفل عبر هاتفه ويؤرقه 24 ساعة. أشكاله:</p>
+        <ul>
+          <li>نشر إشاعات كاذبة أو صور محرجة على السوشيال ميديا</li>
+          <li>إرسال رسائل مؤذية أو مهددة في الخاص أو جماعياً</li>
+          <li>انتحال هوية الضحية وإرسال رسائل مسيئة بأسمها</li>
+          <li>الإقصاء المتعمد من المجموعات والمحادثات الاجتماعية</li>
+          <li>الـ Doxxing: كشف معلومات خاصة بالضحية علناً</li>
+        </ul>
+        <p><strong>عواقب خطيرة جداً:</strong> أثبتت الدراسات ارتباط التنمر الإلكتروني بالاكتئاب الشديد والقلق وانعدام الثقة بالنفس. 7% من الضحايا يفكرون بالانتحار وفق دراسة 2023. علّم طفلك:</p>
+        <ul>
+          <li>لا يرد على المتنمرين أبداً — الرد يغذّيهم</li>
+          <li>يلتقط لقطات شاشة كدليل قبل الحذف</li>
+          <li>يحظر المتنمر ويُبلّغ عنه فوراً في المنصة</li>
+          <li>يخبرك فوراً دون خوف أو خجل — أنت حليفه لا قاضيه</li>
+        </ul>
+        <p>وأنت كوالد: لا تردّ بعصبية أو لوم، كن داعماً أولاً. أحياناً الطفل يصمت لأنه يخاف أن تُمنع عنه الأجهزة.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/4144101/pexels-photo-4144101.jpeg" alt="Cyberbullying child protection online" onerror="this.src='https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🎮 ألعاب الفيديو والتطبيقات — مخاطر خفية بين يدي طفلك</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>ألعاب الفيديو متعددة اللاعبين والتطبيقات الاجتماعية تخلق بيئة يتواصل فيها أطفالك مع غرباء تماماً، بعضهم يتظاهر بأنهم أطفال مثلهم. أخطر المخاطر:</p>
+        <ul>
+          <li><strong>الاستدراج (Grooming):</strong> بناء علاقة ثقة تدريجية مع طفل عبر الإنترنت بغرض استغلاله. يستغرق أسابيع أو أشهر وغالباً يبدأ باللعب المشترك.</li>
+          <li><strong>المشتريات داخل التطبيق:</strong> كثير من الأطفال أنفقوا آلاف الدولارات بطاقات والديهم دون قصد على Fortnite وRoblox وغيرها.</li>
+          <li><strong>المحتوى الضار في الألعاب:</strong> بعض الألعاب تحتوي دردشة صوتية غير خاضعة للرقابة يمكن أن يسمع فيها طفلك محتوى بالغاً أو تهديدات.</li>
+          <li><strong>الإدمان الرقمي:</strong> الألعاب مصممة لإبقاء اللاعب مدمناً. أعراضه: الإهمال الدراسي، العصبية عند إيقاف الجهاز، صعوبة النوم.</li>
+        </ul>
+        <p><strong>الحل:</strong> افهم ما يلعبه طفلك، العب معه أحياناً لتفهم بيئته، راجع إعدادات الخصوصية في كل لعبة، وافصل ربط بطاقتك البنكية بحسابه.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg" alt="Child playing video games safety" onerror="this.src='https://images.pexels.com/photos/4144179/pexels-photo-4144179.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 6: حماية النفس ═══════════ -->
+<div id="p6" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> حماية النفس</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-user-shield"></i></div><div class="pg-title-txt"><span>SELF PROTECTION</span>حماية النفس والأسرة — دليلك العملي الشامل</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🔑 كلمات المرور والمصادقة الثنائية — خط دفاعك الأول والأقوى</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p><strong>كلمة المرور القوية</strong> هي بوابتك الأولى ضد الاختراق. 80% من الاختراقات الناجحة استخدمت كلمات مرور ضعيفة أو مسربة. قواعد كلمة المرور القوية:</p>
+        <ul>
+          <li>12 حرفاً على الأقل (16+ ممتاز) تشمل: أحرفاً كبيرة (A-Z)، صغيرة (a-z)، أرقام (0-9)، ورموزاً (!@#$%^&*)</li>
+          <li>لا تستخدم معلومات شخصية: اسمك، تاريخ ميلادك، اسم قطتك — كلها في ملفاتك المكشوفة على الإنترنت</li>
+          <li>كلمة مرور مختلفة تماماً لكل حساب. إذا سُرب حساب واحد لا تنهار باقي حساباتك</li>
+          <li>استخدم <strong>مدير كلمات المرور (Password Manager)</strong>: Bitwarden (مجاني ومفتوح المصدر)، 1Password، أو Dashlane. يولّد ويحفظ كلمات مرور معقدة ويملؤها تلقائياً</li>
+          <li>عبارة مرور (Passphrase): "القطة تجري في الحديقة" أقوى من "P@ssw0rd123" وأسهل للحفظ</li>
+        </ul>
+        <p><strong>المصادقة الثنائية (2FA/MFA):</strong> حتى لو عُرفت كلمة مرورك لا يستطيع المهاجم الدخول بدون الرمز الثاني. فعّلها في كل حساب يدعمها، خصوصاً البريد الإلكتروني والحسابات البنكية وحسابات التواصل الاجتماعي. خيارات 2FA من الأقوى للأضعف: مفتاح YubiKey ← تطبيق Authenticator ← رسالة SMS.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/6054882/pexels-photo-6054882.jpeg" alt="Password manager 2FA security" onerror="this.src='https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>💾 التحديثات والنسخ الاحتياطي — حياتك الرقمية احتياطية عند كل ضغطة</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p><strong>التحديثات:</strong> كل تحديث لنظام التشغيل أو التطبيق يحتوي على تصحيحات لثغرات أمنية مكتشفة. WannaCry استغل ثغرة كان مايكروسوفت قد أصدر تصحيحها قبل شهرين — الضحايا ببساطة لم يُحدّثوا! قاعدة ذهبية: فعّل التحديث التلقائي دائماً.</p>
+        <p><strong>النسخ الاحتياطي — قاعدة 3-2-1:</strong></p>
+        <ul>
+          <li><strong>3 نسخ</strong> من بياناتك على الأقل</li>
+          <li><strong>2 وسيطتان</strong> مختلفتان (قرص خارجي + سحابة)</li>
+          <li><strong>1 خارج الموقع</strong> (نسخة بعيدة عن موقعك الجغرافي)</li>
+        </ul>
+        <p><strong>أدوات النسخ الاحتياطي الموصى بها:</strong> Google Drive، OneDrive، iCloud للسحابة؛ Backblaze أو Acronis للنسخ المنزلية؛ قرص HDD خارجي غير متصل بالإنترنت للحماية من Ransomware.</p>
+        <p><strong>حماية الواي فاي:</strong> غيّر اسم الشبكة (SSID) وكلمة المرور الافتراضية للراوتر فوراً. استخدم WPA3 أو WPA2 للتشفير. لا تشارك كلمة المرور مع الزوار عبر شبكة الضيوف المنفصلة. VPN موثوقة عند استخدام الواي فاي العام.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg" alt="Backup data security update" onerror="this.src='https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>📱 أمان التطبيقات والخصوصية الرقمية في حياتك اليومية</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <ul>
+          <li><strong>تنزيل التطبيقات:</strong> فقط من المتاجر الرسمية (App Store / Google Play). لا تنزل تطبيقات مكسورة (Cracked) فهي تحتوي في الغالب على برمجيات خبيثة.</li>
+          <li><strong>صلاحيات التطبيقات:</strong> راجع ما تطلبه كل تطبيق. هل يحتاج تطبيق المصباح فعلاً إلى وصول جهات الاتصال والميكروفون والكاميرا؟</li>
+          <li><strong>التطبيقات الموثوقة للمراسلة:</strong> Signal للأكثر خصوصية، WhatsApp مع التشفير النهائي. تجنب الرسائل النصية SMS لتبادل المعلومات الحساسة.</li>
+          <li><strong>تشفير الجهاز:</strong> فعّل تشفير الجهاز الكامل في إعدادات هاتفك وحاسوبك. إذا سُرق جهازك لا يستطيعون الوصول لبياناتك.</li>
+          <li><strong>رمز قفل قوي:</strong> استخدم PIN من 6+ أرقام أو كلمة مرور بدلاً من بصمة الإصبع أو الوجه عند الضرورة — لأن البصمة يمكن إجبارك على استخدامها قانونياً.</li>
+          <li><strong>الشبكات الافتراضية الخاصة (VPN):</strong> Mullvad وProtonVPN خيارات موثوقة تشفّر اتصالك وتخفي هويتك. تجنب VPN المجانية — أنت المنتج فيها.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/6181/sea-man-person-people.jpg" alt="Mobile app security privacy" onerror="this.src='https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 7: حماية الشركة ═══════════ -->
+<div id="p7" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> حماية الشركة</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-building"></i></div><div class="pg-title-txt"><span>ENTERPRISE SECURITY</span>حماية الشركات والمؤسسات — الدليل الاحترافي</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🏛️ البنية الأمنية المؤسسية — الطبقات الدفاعية الصحيحة</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>الأمن المؤسسي نهجٌ متعدد الطبقات لأن المهاجم المحترف يبحث دائماً عن أضعف حلقة. إذا اخترق طبقة وجد طبقة أخرى وأخرى — هذا ما يسمى <strong>Defense in Depth</strong>:</p>
+        <ul>
+          <li><strong>مبدأ الامتياز الأدنى (Least Privilege):</strong> لا أحد يحصل على أكثر من الصلاحيات التي يحتاجها لعمله بالضبط. المحاسب لا يحتاج وصولاً لقاعدة بيانات العملاء الكاملة.</li>
+          <li><strong>جدران الحماية من الجيل التالي (NGFW):</strong> تفحص حركة المرور بعمق وتعترض الهجمات الذكية. Palo Alto وFortinet وCisco أشهر المزودين.</li>
+          <li><strong>IDS/IPS:</strong> أنظمة الكشف عن التسلل ومنعه تراقب الشبكة وتنبّه فورياً عند اكتشاف أنماط هجوم.</li>
+          <li><strong>SIEM (إدارة المعلومات والأحداث الأمنية):</strong> يجمع سجلات (Logs) من جميع الأجهزة ويحللها بالذكاء الاصطناعي للكشف عن الأنماط الشاذة. Splunk وIBM QRadar أشهر الأمثلة.</li>
+          <li><strong>EDR (الكشف والاستجابة عند نقطة النهاية):</strong> CrowdStrike Falcon وMicrosoft Defender ATP يراقبان كل جهاز بشكل فردي ويستجيبان تلقائياً للتهديدات.</li>
+          <li><strong>Zero Trust Architecture:</strong> المبدأ الحديث: "لا تثق بأحد، تحقق من الجميع دائماً" — حتى الموظف الداخلي يُتحقق منه في كل طلب وصول.</li>
+          <li><strong>تشفير البيانات:</strong> في وضعَي التخزين (at rest) والنقل (in transit) — لو سُرقت البيانات لا قيمة لها بدون مفتاح التشفير.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5473955/pexels-photo-5473955.jpeg" alt="Security operations center SOC enterprise" onerror="this.src='https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>👔 تدريب الموظفين — الاستثمار الأمني الأعلى عائداً</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>يمكنك شراء أحدث جدران الحماية والذكاء الاصطناعي الأمني وإنفاق ملايين، لكن <strong>موظف واحد ينقر على رابط مزيف</strong> يهدم كل ذلك في ثوانٍ. 95% من الاختراقات الناجحة بدأت بخطأ بشري. لذلك تدريب الموظفين هو أعلى استثمار أمني عائداً:</p>
+        <ul>
+          <li><strong>برامج التوعية الأمنية المستمرة:</strong> ليس حدثاً سنوياً بل ثقافة يومية. رسائل قصيرة، فيديوهات، اختبارات سريعة بشكل منتظم.</li>
+          <li><strong>محاكاة هجمات التصيد (Phishing Simulation):</strong> إرسال رسائل تصيد مزيفة للموظفين ورؤية من ينقر. من ينقر يحصل على تدريب فوري وليس عقوبة — الهدف التعلم لا الإخافة.</li>
+          <li><strong>تدريب الوعي بالهندسة الاجتماعية:</strong> تعليم الموظفين كيفية التحقق من هوية المتصل قبل إعطاء أي معلومات، حتى للمدير العام.</li>
+          <li><strong>سياسة مكتب نظيف (Clean Desk Policy):</strong> لا يُترك أي وثيقة حساسة على المكتب. اقفل شاشتك عند المغادرة. تمزّق الوثائق قبل رميها.</li>
+          <li><strong>إجراءات الإبلاغ عن الحوادث:</strong> كل موظف يعرف بالضبط ماذا يفعل إذا شك في هجوم — من يتصل ولا يحذف شيئاً.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg" alt="Employee cybersecurity training" onerror="this.src='https://images.pexels.com/photos/1181678/pexels-photo-1181678.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🚨 خطة الاستجابة للحوادث — ماذا تفعل عند الاختراق؟</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>ليس السؤال إذا كانت مؤسستك ستتعرض لهجوم، بل متى. <strong>IRP (Incident Response Plan)</strong> هي خطة مكتوبة ومختبرة تحدد بالضبط ما يفعله كل شخص عند الاختراق. مراحل الاستجابة وفق NIST:</p>
+        <ul>
+          <li><strong>التحضير (Preparation):</strong> التدريب المسبق، الأدوات الجاهزة، فريق IRT المحدد بأدواره، وخط اتصال طوارئ.</li>
+          <li><strong>التحديد (Identification):</strong> هل نحن نتعرض لهجوم فعلاً؟ ما نطاقه؟ متى بدأ؟ من المتضرر؟</li>
+          <li><strong>الاحتواء (Containment):</strong> عزل الأنظمة المصابة فوراً لمنع انتشار الضرر. قطع الإنترنت عن الجهاز المصاب بدون إغلاقه للحفاظ على الأدلة.</li>
+          <li><strong>الاستئصال (Eradication):</strong> إزالة البرمجيات الضارة والثغرات التي مكّنت الهجوم.</li>
+          <li><strong>الاسترداد (Recovery):</strong> استعادة الأنظمة من نسخ احتياطية سليمة مع المراقبة المكثفة للتأكد من عدم العودة.</li>
+          <li><strong>الدروس المستفادة (Lessons Learned):</strong> تقرير كامل خلال أسبوعين: كيف حدث الاختراق، ما الذي فُعل، ما الذي يجب تحسينه.</li>
+        </ul>
+        <p>اختبر خطتك بانتظام بـ<strong>Tabletop Exercises</strong> — جلسات محاكاة يتخيل فيها الفريق سيناريو هجوم ويقرر ماذا يفعل خطوة بخطوة.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5380612/pexels-photo-5380612.jpeg" alt="Incident response team cybersecurity" onerror="this.src='https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 8: قصص ═══════════ -->
+<div id="p8" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> قصص واقعية</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-book-open"></i></div><div class="pg-title-txt"><span>REAL STORIES</span>قصص واقعية مؤثرة هزّت عالم الأمن السيبراني</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>💀 هجوم WannaCry العالمي 2017 — الدرس الذي كلّف المليارات</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>في الثاني عشر من مايو 2017، انطلق هجوم <strong>WannaCry</strong> وتحوّل خلال ساعات إلى أضخم وباء رقمي في التاريخ. أصاب أكثر من <strong>200,000 جهاز في 150 دولة</strong> في يوم واحد. البداية كانت ثغرة EternalBlue في Windows سرقها قراصنة من وكالة NSA الأمريكية وأفلتت لاحقاً!</p>
+        <p>هيئة الصحة الوطنية البريطانية (NHS) تأثرت تأثراً مدمراً: <strong>أُلغيت 19,000 موعد طبي</strong>، وتعطلت أجهزة التصوير بالرنين المغناطيسي، واضطرت المستشفيات لإعادة توجيه سيارات الإسعاف. شركة Telefónica في إسبانيا، Renault في فرنسا، وRussian Railways كلها ضُربت. مطلوب الفدية: 300 دولار بيتكوين لكل جهاز.</p>
+        <p>بطل القصة المفاجئ: باحث الأمن البريطاني <strong>Marcus Hutchins</strong> عمره 22 سنة وجد زر إيقاف الطوارئ (kill switch) باتفاق عرضي ووقف الهجوم في ساعات!</p>
+        <p><strong>💡 الدرس الذي لا يُنسى:</strong> التصحيح الأمني لثغرة EternalBlue كان متاحاً من مايكروسوفت قبل شهرين من الهجوم. الضحايا لم يُحدّثوا أنظمتهم. التحديث الفوري ليس اختياراً.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg" alt="WannaCry ransomware attack 2017" onerror="this.src='https://images.pexels.com/photos/5935791/pexels-photo-5935791.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🎮 اختراق سوني PlayStation Network 2011 — 77 مليون ضحية</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>في أبريل 2011، توقف مفاجئ لشبكة PlayStation Network لملايين اللاعبين حول العالم. بعد أيام كشفت سوني الحقيقة المروعة: <strong>مهاجمون اخترقوا قواعد بياناتها وسرقوا معلومات 77 مليون حساب</strong> تشمل: الأسماء، العناوين، البريد الإلكتروني، وبيانات بطاقات الائتمان!</p>
+        <p>البنية التحتية لسوني كانت بمستوى أمني متدنٍ بشكل صادم: قواعد البيانات لم تكن مشفرة بالكامل، وكلمات المرور حُفظت بدون تشفير مناسب. توقفت الخدمة <strong>23 يوماً كاملة</strong>، وهو أطول انقطاع في تاريخ الخدمات الترفيهية الإلكترونية. الخسائر الإجمالية: <strong>171 مليون دولار</strong> في التحقيقات والتعويضات والدعاوى القضائية.</p>
+        <p>البنك الكندي أبلغ عن استخدام احتيالي لبطاقات مسرّبة في أوروبا، ما أثبت أن البيانات المسروقة بيعت فعلاً في الأسواق السوداء.</p>
+        <p><strong>💡 الدرس:</strong> تشفير البيانات الحساسة إلزامي وليس اختيارياً. عدم التشفير ليس توفيراً بل مقامرة بحياة الشركة ومستقبل ملايين العملاء.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg" alt="Sony PlayStation Network hack breach" onerror="this.src='https://images.pexels.com/photos/5473956/pexels-photo-5473956.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🛢️ هجوم أرامكو السعودية بـ Shamoon 2012 — 30,000 جهاز في ساعات</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>في أغسطس 2012، تعرضت أرامكو السعودية — أكبر شركة نفطية في العالم — لأحد أشرس الهجمات في تاريخ الأمن السيبراني. فيروس <strong>Shamoon</strong> الذي اخترق الشبكة الداخلية لم يسرق البيانات بل <strong>محاها نهائياً</strong> من 30,000 جهاز كمبيوتر في وقت واحد!</p>
+        <p>الفيروس استخدم تقنية "Wiper" التي تكتب فوق البيانات بصور عشوائية (اختار المهاجمون صورة علم أمريكي مشتعلاً!) ثم يُدمّر قطاع الإقلاع (MBR) جاعلاً الجهاز عديم الفائدة تماماً. الهدف لم يكن المال بل <strong>تعطيل قدرة أرامكو على تصدير النفط</strong>.</p>
+        <p>استغرق الأمر <strong>أشهراً لشراء واستبدال 30,000 جهاز</strong> وإعادة بناء البنية التحتية من الصفر. وشُحّت أسواق الأقراص الصلبة في منطقة الخليج كلها لارتفاع الطلب المفاجئ!</p>
+        <p><strong>💡 الدرس:</strong> عزل الشبكات الحيوية (Air Gap)، تأمين أنظمة التحكم الصناعي (ICS/SCADA)، والنسخ الاحتياطية خارج الموقع ضرورة استراتيجية لا رفاهية.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5380612/pexels-photo-5380612.jpeg" alt="Shamoon Aramco cyberattack oil" onerror="this.src='https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🕵️ SolarWinds 2020 — الهجوم الذي أذهل العالم</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>في ديسمبر 2020 كشفت شركة FireEye الأمنية عن هجوم صنّفه الخبراء الأكثر تعقيداً وذكاءً في التاريخ. اخترق المهاجمون — يُعتقد أنهم روس — شركة <strong>SolarWinds</strong> المزودة لبرنامج إدارة الشبكات <strong>Orion</strong> المستخدم من 18,000 مؤسسة حكومية وخاصة حول العالم، بما فيها وزارة الخزانة والدفاع الأمريكية وNASA!</p>
+        <p>العبقرية الشيطانية للهجوم: زرعوا كوداً خبيثاً داخل <strong>تحديث رسمي موقّع رقمياً</strong> من SolarWinds. الضحايا ثبّتوا التحديث الملوث بأنفسهم معتقدين أنه آمن. بقي الكود الخبيث خاملاً لـ14 يوماً قبل التنشيط لتجنب الاكتشاف. المهاجمون قضوا <strong>9 أشهر كاملة</strong> داخل الأنظمة الأمريكية الأكثر حساسية يجمعون المعلومات بصمت.</p>
+        <p><strong>💡 الدرس:</strong> سلسلة التوريد البرمجية (Software Supply Chain) نقطة ضعف جوهرية. التحقق المستمر من سلامة التحديثات، وعزل الشبكات الحساسة ضروري حتى مع المزودين الموثوقين.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5473955/pexels-photo-5473955.jpeg" alt="SolarWinds supply chain cyberattack" onerror="this.src='https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 9: قوانين ═══════════ -->
+<div id="p9" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> القوانين</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-gavel"></i></div><div class="pg-title-txt"><span>LEGAL FRAMEWORK</span>القوانين التي تحمي حقوقك الرقمية</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🇪🇬 القانون المصري 175 لسنة 2018 — مكافحة جرائم تقنية المعلومات</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>صدر قانون رقم 175 لسنة 2018 ليضع إطاراً قانونياً شاملاً لمكافحة الجرائم الإلكترونية في مصر. يُعتبر من أكثر التشريعات العربية تفصيلاً في هذا المجال. أبرز أحكامه:</p>
+        <ul>
+          <li><strong>المادة 25 — الدخول غير المشروع:</strong> حبس لا يقل عن سنة وغرامة 50,000 - 100,000 جنيه لكل من وصل عمداً لموقع أو نظام أو حساب دون إذن أصحابه.</li>
+          <li><strong>المادة 26 — التنصت والاعتراض:</strong> حبس لا يقل عن سنتين وغرامة 100,000 - 300,000 جنيه لمن يعترض اتصالات أو يتنصت عليها.</li>
+          <li><strong>المادة 27 — الأمن القومي:</strong> السجن المؤبد إذا أخلّت الجريمة الإلكترونية بالأمن القومي أو الدفاع الوطني.</li>
+          <li><strong>التشهير الإلكتروني:</strong> عقوبات صارمة لمن ينشر محتوى يمس الخصوصية أو يحقق الابتزاز أو يضر بالسمعة.</li>
+          <li><strong>انتحال الشخصية الإلكترونية:</strong> التظاهر بأنك شخص آخر عبر الإنترنت لغرض ضار جريمة يعاقب عليها القانون.</li>
+          <li><strong>الأخبار الكاذبة:</strong> نشر محتوى يهدد السلم الاجتماعي أو يثير الفتنة عبر الفضاء الإلكتروني مجرّم ومعاقب عليه.</li>
+        </ul>
+        <p>الجهة المختصة في مصر: <strong>الجهاز القومي لتنظيم الاتصالات (NTRA)</strong> ومكتب مكافحة الجرائم الإلكترونية بالنيابة العامة.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg" alt="Egyptian cybercrime law 175 legal" onerror="this.src='https://images.pexels.com/photos/6077368/pexels-photo-6077368.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🇪🇺 GDPR الأوروبي — أقوى قانون لحماية البيانات في العالم</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>دخل <strong>General Data Protection Regulation (GDPR)</strong> حيز التنفيذ في مايو 2018 وغيّر قواعد اللعبة عالمياً في حماية البيانات. قانون يتحدث بلغة الأرقام الضخمة فتُصغي له الشركات العالمية:</p>
+        <ul>
+          <li><strong>حق المعرفة:</strong> تعرف ما البيانات التي جمعتها عنك أي شركة ولماذا</li>
+          <li><strong>حق الوصول:</strong> تحصل على نسخة كاملة من بياناتك في 30 يوماً</li>
+          <li><strong>حق التصحيح:</strong> تصحيح أي معلومة خاطئة عنك</li>
+          <li><strong>حق المحو (Right to be Forgotten):</strong> طلب حذف بياناتك نهائياً من أي شركة في ظروف محددة</li>
+          <li><strong>حق نقل البيانات:</strong> استلام بياناتك بصيغة قابلة للنقل لمزود آخر</li>
+          <li><strong>الغرامات القاسية:</strong> حتى 20 مليون يورو أو 4% من الإيرادات العالمية السنوية أيهما أكبر</li>
+        </ul>
+        <p>أشهر الغرامات: Google: 50 مليون يورو بفرنسا، Meta/Facebook: 1.2 مليار يورو بإيرلندا. <strong>ينطبق على أي مؤسسة تعالج بيانات مواطنين أوروبيين بغض النظر عن موقعها الجغرافي</strong>، لذا يؤثر على شركاتنا العربية المتعاملة مع أوروبا.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg" alt="GDPR Europe data protection law" onerror="this.src='https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🇸🇦 نظام مكافحة جرائم المعلوماتية السعودي — سجن 10 سنوات وغرامات 5 ملايين</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>صدر النظام السعودي لمكافحة جرائم المعلوماتية بالمرسوم الملكي رقم M/17 عام 1428هـ (2007م) وتم تحديثه لاحقاً. يُصنَّف من أكثر الأنظمة صرامة في المنطقة:</p>
+        <ul>
+          <li><strong>الاختراق والتجسس:</strong> سجن حتى سنة وغرامة 500,000 ريال للدخول غير المشروع للأنظمة</li>
+          <li><strong>سرقة البيانات والاحتيال:</strong> سجن حتى 4 سنوات وغرامة 3 ملايين ريال</li>
+          <li><strong>الجرائم المشددة:</strong> سجن حتى 10 سنوات وغرامة 5 ملايين ريال لجرائم الابتزاز والإباحية والمساس بالنظام العام</li>
+          <li><strong>الأمن الوطني:</strong> السجن المؤبد لمن تؤدي جريمته إلى الإخلال بالنظام العام أو المساس بالمصالح الوطنية</li>
+          <li><strong>التشهير والقذف:</strong> عقوبات صارمة لنشر المحتوى المسيء عبر الإنترنت</li>
+        </ul>
+        <p>مبدأ الولاية القضائية موسّع: <strong>الجريمة تُعدّ واقعة في المملكة إذا كانت آثارها وقعت فيها</strong>، حتى لو كان المجرم خارجها.</p>
+        <p>الجهة المختصة: <strong>هيئة الأمن السيبراني الوطنية (NCA)</strong> التي تعتبر من أقوى الهيئات السيبرانية إقليمياً.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/6077368/pexels-photo-6077368.jpeg" alt="Saudi cybercrime law regulations" onerror="this.src='https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE 10: تعلم ═══════════ -->
+<div id="p10" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> التعلم</div>
+  <div class="pg-title"><div class="pg-title-ico"><i class="fas fa-graduation-cap"></i></div><div class="pg-title-txt"><span>LEARNING PATH</span>كيف تتعلم الأمن السيبراني خطوة بخطوة</div></div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🗺️ خارطة الطريق الكاملة — من الصفر حتى الاحتراف</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>الأمن السيبراني مجال واسع ومتعدد التخصصات. الطريق الصحيح لا يبدأ بتعلم الاختراق مباشرة — الأساسيات أولاً:</p>
+        <p><strong>المرحلة الأولى — الأساسيات (3-6 أشهر):</strong></p>
+        <ul>
+          <li>شبكات الحاسوب: بروتوكولات TCP/IP، DNS، HTTP/S، مفهوم الطبقات OSI Model — كتاب CompTIA Network+ مثالي</li>
+          <li>أنظمة التشغيل: Windows Server وبخاصة Linux (Ubuntu/Kali) وأوامر Terminal الأساسية</li>
+          <li>البرمجة: Python للأتمتة والسكريبتات، Bash للأنظمة، وأساسيات HTML/JavaScript لفهم ثغرات الويب</li>
+          <li>أساسيات قواعد البيانات: SQL لفهم وأحياناً اكتشاف ثغرات SQL Injection</li>
+        </ul>
+        <p><strong>المرحلة الثانية — الأمن السيبراني (6-12 شهراً):</strong></p>
+        <ul>
+          <li>شهادة CompTIA Security+ كنقطة انطلاق للتوظيف والمعرفة الشاملة</li>
+          <li>المنصات التدريبية: TryHackMe للمبتدئين (ممتاز جداً ومجاني جزئياً)، Hack The Box للمتقدمين</li>
+          <li>تعلم أدوات: Kali Linux، Nmap، Metasploit، Burp Suite، Wireshark</li>
+        </ul>
+        <p><strong>المرحلة الثالثة — التخصص (12-24 شهراً):</strong> CEH للاختراق الأخلاقي، OSCP للاحترافيين، CISSP للقادة، Cloud Security للحوسبة السحابية.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg" alt="Cybersecurity learning path roadmap" onerror="this.src='https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🏆 الشهادات الاحترافية — التذاكر الذهبية لسوق العمل</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <ul>
+          <li><strong>CompTIA Security+ (SY0-701):</strong> أفضل شهادة للمبتدئين، معترف بها من وزارة الدفاع الأمريكية. تغطي التهديدات والتشفير وإدارة المخاطر والامتثال. تكلفة الامتحان: ~370 دولار.</li>
+          <li><strong>CEH — Certified Ethical Hacker:</strong> تُعلّمك التفكير كالمهاجم لتدافع كالمحترف. تتطلب 2 سنة خبرة أو دورة EC-Council الرسمية. تكلفة: ~1000 دولار.</li>
+          <li><strong>CISSP — Certified Information Systems Security Professional:</strong> المعيار الذهبي لمديري الأمن، تتطلب 5 سنوات خبرة. من يحملها متوسط راتبه 120,000 دولار سنوياً في أمريكا.</li>
+          <li><strong>OSCP — Offensive Security Certified Professional:</strong> الأصعب والأكثر احتراماً في اختراق الأنظمة. امتحان عملي 24 ساعة تخترق فيها 5 أجهزة حقيقية. تكلفة: ~1499 دولار.</li>
+          <li><strong>شهادات السحابة:</strong> AWS Security Specialty، Microsoft AZ-500، Google PCSE للمتخصصين في Cloud Security.</li>
+          <li><strong>شهادات مجانية:</strong> Google Cybersecurity Certificate على Coursera (بتكلفة منخفضة)، IBM Security Analyst على edX، دورات CISCO Networking Academy المجانية.</li>
+        </ul>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/1516440/pexels-photo-1516440.jpeg" alt="Cybersecurity certifications career" onerror="this.src='https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>🎯 مسابقات CTF — التدريب الأكثر متعة وفاعلية</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p><strong>Capture The Flag (CTF)</strong> هي مسابقات تعليمية تتضمن تحديات أمنية عملية تُحلّ قانونياً في بيئة مخصصة. المشاركون يحلون ألغازاً في: اختراق الويب، الهندسة العكسية، التشفير، الشبكات، والطب الشرعي الرقمي. من يجد "العلم" (Flag) يحصل على النقاط. أفضل الطرق للتعلم الحقيقي!</p>
+        <ul>
+          <li><strong>TryHackMe:</strong> للمبتدئين تماماً — غرف تفاعلية موجّهة خطوة بخطوة. مجانية جزئياً. ابدأ من هنا بلا تردد.</li>
+          <li><strong>Hack The Box (HTB):</strong> للمتقدمين — أجهزة حقيقية مع نظرة شبكية كاملة. المجتمع مذهل والتحديات رائعة.</li>
+          <li><strong>PicoCTF:</strong> مسابقة سنوية من CMU مجانية وموجّهة للطلاب. مثالية للمبتدئين.</li>
+          <li><strong>OverTheWire:</strong> مجموعة ألعاب أمنية نصية مجانية. Bandit لتعلم Linux، Natas لتعلم أمن الويب.</li>
+          <li><strong>CTFtime.org:</strong> التقويم الكامل لجميع مسابقات CTF حول العالم. شارك في مسابقتين شهرياً.</li>
+          <li><strong>VulnHub وHackWars:</strong> أجهزة افتراضية معرّضة للاختراق لتحميلها وتجربتها محلياً بأمان.</li>
+        </ul>
+        <p>إنشاء حساب GitHub وتوثيق حلولك (Write-ups) يبني سجلاً مهنياً (Portfolio) يُغني عن شهادات كثيرة عند التوظيف.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg" alt="CTF competition cybersecurity hacking" onerror="this.src='https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg'"></div>
+    </div></div></div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hd"><div class="acc-left"><div class="acc-dot"></div>💼 المسار الوظيفي والرواتب — مستقبل يُحسدك عليه</div><div class="acc-arr"><i class="fas fa-chevron-down"></i></div></div>
+    <div class="acc-bd"><div class="acc-inner"><div class="c-layout">
+      <div class="c-text">
+        <p>الأمن السيبراني من أندر المجالات التي تعاني نقصاً حاداً في الكفاءات عالمياً — <strong>3.5 مليون وظيفة شاغرة في 2024</strong>. هذا يعني قوة تفاوضية هائلة للمتخصص:</p>
+        <ul>
+          <li><strong>محلل أمن (Security Analyst):</strong> يراقب التهديدات ويحقق فيها. مدخل جيد. راتب: 60,000-90,000 دولار أمريكياً.</li>
+          <li><strong>مهندس أمن (Security Engineer):</strong> يصمم وينفذ البنية التحتية الأمنية. راتب: 90,000-130,000 دولار.</li>
+          <li><strong>مخترق أخلاقي/باحث ثغرات (Penetration Tester):</strong> يحاكي هجمات حقيقية لاكتشاف الضعف. الوظيفة الأكثر إثارة! راتب: 80,000-150,000 دولار.</li>
+          <li><strong>باحث تهديدات (Threat Intelligence Analyst):</strong> يتتبع مجموعات القرصنة ويحلل التكتيكات. راتب: 85,000-120,000 دولار.</li>
+          <li><strong>خبير طب شرعي رقمي (DFIR):</strong> يحقق في الجرائم الإلكترونية ويجمع الأدلة. راتب: 75,000-120,000 دولار.</li>
+          <li><strong>مدير أمن المعلومات (CISO):</strong> أعلى المناصب — المسؤول الكامل عن الاستراتيجية الأمنية. راتب: 180,000-400,000+ دولار!</li>
+        </ul>
+        <p>في العالم العربي: الطلب يرتفع بسرعة خاصة في السعودية والإمارات والكويت ومصر. مع الخبرة والشهادات راتب 15,000-50,000 دولار سنوياً واقعي تماماً.</p>
+      </div>
+      <div class="c-img"><img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg" alt="Cybersecurity career salary job" onerror="this.src='https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg'"></div>
+    </div></div></div>
+  </div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════ PAGE VIDEOS ═══════════ -->
+<div id="pvid" class="page">
+  <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-right"></i> الرئيسية</button>
+  <div class="pg-breadcrumb">الرئيسية <i class="fas fa-chevron-left"></i> الفيديوهات</div>
+  <div class="pg-title"><div class="pg-title-ico" style="color:#ff4444"><i class="fab fa-youtube"></i></div><div class="pg-title-txt"><span>VIDEO LIBRARY</span>مكتبة الفيديوهات التوعوية والتعليمية</div></div>
+  <p style="color:var(--muted);margin-bottom:.5rem">أفضل فيديوهات الأمن السيبراني بالعربي — اضغط لمشاهدة مباشرة على يوتيوب</p>
+  <div class="vid-grid" id="vGrid"></div>
+  <footer><div class="fl"><i class="fas fa-shield-halved"></i></div>© 2026 — الموسوعة الشاملة للأمن السيبراني</footer>
+</div>
+
+<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
+<script>
+// ── INTRO ──────────────────────────────────────────────────────
+(function(){
+  // Particles
+  const ptc = document.getElementById('ptc');
+  for(let i=0;i<50;i++){
+    const s=document.createElement('span');
+    const sz=Math.random()*3+1;
+    s.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-duration:${Math.random()*9+5}s;animation-delay:${Math.random()*6}s;background:${Math.random()>.5?'#00e5ff':'#ffd700'};border-radius:50%;`;
+    ptc.appendChild(s);
+  }
+  // Matrix rain
+  const rainEl=document.getElementById('rain');
+  const chars='01アイウエオカキクケコABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]<>/\\|';
+  for(let i=0;i<28;i++){
+    const s=document.createElement('span');
+    let txt='';
+    for(let j=0;j<Math.floor(Math.random()*20+8);j++) txt+=chars[Math.floor(Math.random()*chars.length)]+' ';
+    s.textContent=txt;
+    s.style.cssText=`left:${i*3.6}%;animation-duration:${Math.random()*5+4}s;animation-delay:${Math.random()*4}s;`;
+    rainEl.appendChild(s);
+  }
+  // Code lines
+  const codeEl=document.getElementById('iCode');
+  const lines=['> INITIALIZING FIREWALL [OK]','> LOADING AES-256 ENCRYPTION...','> SCANNING THREAT DATABASE...','> VERIFYING SYSTEM INTEGRITY...','> SECURITY CORE ONLINE ✓'];
+  lines.forEach((l,i)=>setTimeout(()=>{codeEl.innerHTML+=l+'<br>';},2800+i*320));
+  // Status cycler
+  const statEl=document.getElementById('iStat');
+  const msgs=['INITIALIZING SECURITY PROTOCOLS...','LOADING ENCRYPTION MODULES...','SCANNING THREAT DATABASE...','VERIFYING SYSTEM INTEGRITY...','ALL SYSTEMS SECURE ✓'];
+  let mi=0;const si=setInterval(()=>{mi=(mi+1)%msgs.length;statEl.textContent=msgs[mi];},700);
+  // Dismiss
+  const dismiss=()=>{
+    clearInterval(si);
+    const intro=document.getElementById('intro');
+    intro.classList.add('out');
+    setTimeout(()=>intro.style.display='none',800);
+  };
+  document.getElementById('intro').addEventListener('click',dismiss,{once:true});
+  setTimeout(dismiss,6500);
+})();
+
+// ── CANVAS THREE-LIKE ──────────────────────────────────────────
+(function(){
+  const c=document.getElementById('cvs');
+  const ctx=c.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  class P{
+    constructor(){this.reset();}
+    reset(){
+      const r=120+Math.random()*280,a=Math.random()*Math.PI*2;
+      this.x=W/2+Math.cos(a)*r;this.y=H/2+Math.sin(a)*r;
+      this.vx=(Math.random()-.5)*.35;this.vy=(Math.random()-.5)*.35;
+      this.life=Math.random();this.decay=Math.random()*.003+.001;
+      this.sz=Math.random()*2+.5;
+      this.c=Math.random()>.6?`rgba(255,215,0,`:`rgba(0,229,255,`;
+    }
+    draw(){
+      ctx.save();ctx.globalAlpha=this.life;
+      ctx.fillStyle=this.c+this.life+')';
+      ctx.shadowBlur=8;ctx.shadowColor=this.c+'1)';
+      ctx.beginPath();ctx.arc(this.x,this.y,this.sz,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+      this.x+=this.vx;this.y+=this.vy;this.life-=this.decay;
+      if(this.life<=0)this.reset();
+    }
+  }
+  for(let i=0;i<260;i++)particles.push(new P());
+  let t=0;
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    t+=.008;
+    // Orbiting rings
+    [1.1,1.55,2.0].forEach((mul,i)=>{
+      ctx.save();ctx.translate(W/2,H/2);ctx.rotate(t*(i%2?1:-1)*.4);
+      ctx.strokeStyle=`rgba(${i===1?'0,229,255':'255,215,0'},.08)`;
+      ctx.lineWidth=1;ctx.beginPath();
+      ctx.ellipse(0,0,mul*85,mul*48,i*.5,0,Math.PI*2);ctx.stroke();
+      ctx.restore();
+    });
+    particles.forEach(p=>p.draw());
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// ── SOUND ENGINE (هادئ) ───────────────────────────────────────
+let AC=null,muted=false;
+function getAC(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();return AC;}
+function tone(freq,dur,type='sine',g=.25,delay=0){
+  if(muted)return;
+  try{
+    const ctx=getAC(),o=ctx.createOscillator(),gn=ctx.createGain();
+    o.connect(gn);gn.connect(ctx.destination);
+    o.type=type;o.frequency.setValueAtTime(freq,ctx.currentTime+delay);
+    gn.gain.setValueAtTime(0,ctx.currentTime+delay);
+    gn.gain.linearRampToValueAtTime(g,ctx.currentTime+delay+.05);
+    gn.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+delay+dur);
+    o.start(ctx.currentTime+delay);o.stop(ctx.currentTime+delay+dur);
+  }catch(e){}
+}
+function sfxClick(){tone(880,.08,'square',.06);tone(1100,.06,'sine',.04,.07);}
+function sfxNav(){tone(660,.12,'sine',.09);tone(880,.1,'sine',.06,.1);}
+function sfxAccOpen(){tone(440,.1,'sine',.07);tone(550,.08,'sine',.05,.09);}
+function sfxAccClose(){tone(550,.08,'sine',.06);tone(440,.1,'sine',.05,.07);}
+
+// موسيقى هادئة للإنترو (سلم C الكبير مع تتابع بطيء)
+function sfxIntro(){
+  const melody = [
+    [261.63, 0.0], // C4
+    [329.63, 0.35], // E4
+    [392.00, 0.7],  // G4
+    [523.25, 1.05], // C5
+    [392.00, 1.4],  // G4
+    [329.63, 1.75], // E4
+    [261.63, 2.1],  // C4
+    [392.00, 2.45], // G4
+    [523.25, 2.8],  // C5
+    [659.25, 3.15], // E5
+    [523.25, 3.5],  // C5
+    [392.00, 3.85], // G4
+    [523.25, 4.2],  // C5
+    [659.25, 4.55], // E5
+    [784.00, 4.9],  // G5
+    [523.25, 5.3],  // C5
+  ];
+  melody.forEach(([freq, delay]) => {
+    tone(freq, 0.4, 'sine', 0.10, delay);
+  });
+  // طبقة ثانية (أوكتاف منخفض) لإثراء الصوت
+  [130.81, 164.81, 196.00, 261.63, 196.00, 164.81, 130.81].forEach((f,i) => {
+    tone(f, 0.6, 'sine', 0.06, i*0.35);
+  });
+}
+setTimeout(sfxIntro, 800);
+
+const sndBtn=document.getElementById('sndBtn');
+sndBtn.addEventListener('click',()=>{
+  muted=!muted;
+  sndBtn.innerHTML=muted?'<i class="fas fa-volume-mute"></i>':'<i class="fas fa-volume-up"></i>';
+  sndBtn.classList.toggle('muted',muted);
+  if(!muted)tone(880,.15,'sine',.1);
+  sfxClick();
+});
+
+// ── SIDEBAR ────────────────────────────────────────────────────
+const sb=document.getElementById('sb'),sbOv=document.getElementById('sbOv');
+document.getElementById('menuBtn').addEventListener('click',()=>{sb.classList.add('open');sbOv.classList.add('on');sfxClick();});
+document.getElementById('sbClose').addEventListener('click',()=>{sb.classList.remove('open');sbOv.classList.remove('on');sfxClick();});
+sbOv.addEventListener('click',()=>{sb.classList.remove('open');sbOv.classList.remove('on');});
+
+// ── NAVIGATION ─────────────────────────────────────────────────
+function goHome(){
+  document.getElementById('home').style.display='flex';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active-nav'));
+  document.querySelector('[data-p="home"]')?.classList.add('active-nav');
+  sb.classList.remove('open');sbOv.classList.remove('on');
+  sfxNav();window.scrollTo(0,0);
+}
+function gotoPage(id){
+  document.getElementById('home').style.display='none';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active-nav'));
+  const t=document.getElementById(id);
+  if(t){t.classList.add('active');if(id==='pvid')loadVids();}
+  document.querySelector(`[data-p="${id}"]`)?.classList.add('active-nav');
+  sb.classList.remove('open');sbOv.classList.remove('on');
+  sfxNav();window.scrollTo(0,0);
+  resetAccordions(id);
+}
+document.querySelectorAll('.sb-nav a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();const p=a.getAttribute('data-p');
+    if(p==='home')goHome();else gotoPage(p);
+  });
+});
+document.getElementById('home').style.display='flex';
+document.querySelector('[data-p="home"]')?.classList.add('active-nav');
+
+function resetAccordions(id){
+  const pg=document.getElementById(id);if(!pg)return;
+  pg.querySelectorAll('.acc-bd').forEach(b=>{b.classList.remove('open');b.style.maxHeight=null;});
+  pg.querySelectorAll('.acc-hd').forEach(h=>{h.classList.remove('open');const ar=h.querySelector('.acc-arr');if(ar){ar.style.background='';ar.style.borderColor='';}});
+}
+
+// ── ACCORDION ─────────────────────────────────────────────────
+document.body.addEventListener('click',e=>{
+  const hd=e.target.closest('.acc-hd');if(!hd)return;
+  const item=hd.closest('.acc'),bd=item.querySelector('.acc-bd'),inner=item.querySelector('.acc-inner');
+  const isOpen=bd.classList.contains('open');
+  const container=hd.closest('.page')||document.body;
+  container.querySelectorAll('.acc-bd').forEach(b=>{if(b!==bd){b.classList.remove('open');b.style.maxHeight=null;}});
+  container.querySelectorAll('.acc-hd').forEach(h=>{if(h!==hd){h.classList.remove('open');const ar=h.querySelector('.acc-arr');if(ar){ar.style.background='';ar.style.borderColor='';}}} );
+  if(isOpen){
+    bd.classList.remove('open');bd.style.maxHeight=null;hd.classList.remove('open');
+    const ar=hd.querySelector('.acc-arr');if(ar){ar.style.background='';ar.style.borderColor='';}
+    sfxAccClose();
+  }else{
+    bd.classList.add('open');bd.style.maxHeight=(inner?inner.scrollHeight+60:bd.scrollHeight)+'px';hd.classList.add('open');
+    const ar=hd.querySelector('.acc-arr');if(ar){ar.style.background='var(--gold)';ar.style.borderColor='var(--gold)';}
+    sfxAccOpen();
+  }
+});
+
+// ── VIDEOS ─────────────────────────────────────────────────────
+const vids=[
+  {t:"ما هو الأمن السيبراني؟",u:"https://www.youtube.com/watch?v=inWWhr5tnEA",th:"inWWhr5tnEA"},
+  {t:"شرح أنواع الهجمات الإلكترونية",u:"https://www.youtube.com/watch?v=bPVaOlJwQ5A",th:"bPVaOlJwQ5A"},
+  {t:"كيف تحمي نفسك من الاختراق",u:"https://www.youtube.com/watch?v=7B1jFvV4uYY",th:"7B1jFvV4uYY"},
+  {t:"حماية الأطفال على الإنترنت",u:"https://www.youtube.com/watch?v=zV76pr7HdPc",th:"zV76pr7HdPc"},
+  {t:"شرح الـ Ransomware وبرامج الفدية",u:"https://www.youtube.com/watch?v=QlL6uWttR8Y",th:"QlL6uWttR8Y"},
+  {t:"التصيد الاحتيالي — Phishing",u:"https://www.youtube.com/watch?v=9TRR6lHXQ6I",th:"9TRR6lHXQ6I"},
+  {t:"كيف تصنع كلمة مرور قوية",u:"https://www.youtube.com/watch?v=ycYl5KtVLGs",th:"ycYl5KtVLGs"},
+  {t:"شرح المصادقة الثنائية 2FA",u:"https://www.youtube.com/watch?v=W5sLkBfJkvA",th:"W5sLkBfJkvA"},
+  {t:"الهندسة الاجتماعية بالتفصيل",u:"https://www.youtube.com/watch?v=Ja1Brc7tPb4",th:"Ja1Brc7tPb4"},
+  {t:"الأمن السيبراني في المؤسسات",u:"https://youtu.be/UyUPbfUO_2c",th:"UyUPbfUO_2c"},
+  {t:"حماية البيانات الشخصية",u:"https://youtu.be/Q1MUfDTO2tI",th:"Q1MUfDTO2tI"},
+  {t:"شرح كامل لمجال الأمن السيبراني",u:"https://youtu.be/AVF7ta9RC6A",th:"AVF7ta9RC6A"},
+  {t:"كيف تبدأ في الأمن السيبراني",u:"https://youtu.be/9p5PK0ZsHDs",th:"9p5PK0ZsHDs"},
+  {t:"مستقبل الأمن السيبراني",u:"https://youtu.be/DJoWHVdxOsU",th:"DJoWHVdxOsU"}
+];
+function loadVids(){
+  const g=document.getElementById('vGrid');if(!g||g.children.length)return;
+  vids.forEach(v=>{
+    const card=document.createElement('div');card.className='vid-card';
+    card.innerHTML=`<div class="vid-thumb-w"><img src="https://img.youtube.com/vi/${v.th}/hqdefault.jpg" alt="${v.t}" class="vid-thumb" onerror="this.src='https://images.pexels.com/photos/5380592/pexels-photo-5380592.jpeg'"><div class="vid-play-ov"><div class="vid-play"><i class="fas fa-play"></i></div></div></div><div class="vid-info"><h3><i class="fab fa-youtube" style="color:#ff4444;margin-left:6px"></i>${v.t}</h3><a href="${v.u}" target="_blank" rel="noopener" class="vid-link">مشاهدة <i class="fas fa-external-link-alt"></i></a></div>`;
+    g.appendChild(card);
+  });
+}
+</script>
+</body>
+</html>
